@@ -5,6 +5,6 @@ export default styled(props => {
   return <div {...props} />;
 })`
   background-color: ${props => props.theme.colors.black};
-  height: 100%;
+  min-height: 100%;
   padding: 5em;
 `;
