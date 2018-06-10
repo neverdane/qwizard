@@ -47,10 +47,12 @@ export default () => (
 
       const selectableLabels = labels.edges.map(({ node: label }) => label);
 
-      const cards = cardsNodes.edges.map(({ node: card }) => ({
-        ...card,
-        labels: card.labels
-          ? card.labels.edges.map(({ node: label }) => label)
+      const cards = cardsNodes.edges.map(({ node: {id, sentence, answer, labels} }) => ({
+        id,
+        question: sentence,
+        response: answer,
+        labels: labels
+          ? labels.edges.map(({ node: label }) => label)
           : []
       }));
 
