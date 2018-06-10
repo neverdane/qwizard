@@ -117,5 +117,14 @@ services:
     ports:
       - "3000:3000"
 
+  storybook:
+    build:
+      context: ./storybook
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./frontend:/usr/src/storybook:rw,cached
+    ports:
+      - "9009:9009"
+
 volumes:
   db-data: {}
