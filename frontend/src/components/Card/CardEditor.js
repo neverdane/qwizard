@@ -16,14 +16,14 @@ class CardEditor extends React.Component {
   static defaultProps = {
     mode: "creation",
     labels: [],
-    selectableLabelsOptions: [],
+    selectableLabels: [],
     handleSubmit: e => {}
   };
 
   render() {
     const {
       mode,
-      selectableLabelsOptions,
+      selectableLabels,
       handleSubmit,
       onQuestionChange,
       onResponseChange,
@@ -85,7 +85,10 @@ class CardEditor extends React.Component {
             </InputAdornment>
           }
           placeholder="Labels"
-          options={selectableLabelsOptions}
+          options={selectableLabels.map(label => ({
+            label: label.name,
+            value: label.name,
+          }))}
         />
 
         <Button style={{ alignSelf: "stretch" }} onClick={handleSubmit}>
