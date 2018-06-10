@@ -108,5 +108,14 @@ services:
       - "8443:8443"
       - "8444:8444"
 
+  frontend:
+    image: 'node:9.11-alpine'
+    working_dir: '/data'
+    command: 'yarn start'
+    volumes:
+      - './frontend:/data'
+    ports:
+      - "3000:3000"
+
 volumes:
   db-data: {}
