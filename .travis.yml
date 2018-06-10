@@ -1,0 +1,46 @@
+sudo: required
+
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+install: true
+
+before_script:
+  - sudo service postgresql stop
+  - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash -s -- --version v2.6.1
+  # wait for postgresql to shutdown
+  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+
+script:
+  - if jq '.extra.symfony.id != ""' api/composer.json -e; then { echo 'symfony.id must be empty'; echo 'Hint - use $ SYMFONY_SKIP_REGISTRATION=1 composer update ...'; } 1>&2 && false; fi
+  - docker-compose build
+  - docker-compose run --no-deps -T php sh -c 'SYMFONY_SKIP_REGISTRATION=1 composer validate --no-check-publish'
+  - helm lint api/helm/api/
+  - docker-compose up -d
+  - sleep 30
+  - docker-compose exec -T php composer req sensiolabs/security-checker
+  - docker-compose exec -T php bin/console security:check
+  - curl http://localhost # Client
+  - curl http://localhost:81 # Admin
+  - curl http://localhost:8080 # API
+  - curl http://localhost:8081 # Varnish
+  - curl -k https://localhost # Client (HTTP/2)
+  - curl -k https://localhost:444 # Admin (HTTP/2)
+  - curl -k https://localhost:8443 # API (HTTP/2)
+  - curl -k https://localhost:8444 # Varnish (HTTP/2)
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin "$DOCKER_REGISTRY"
+
+deploy:
+  provider: script
+  script: docker-compose push
+  skip_cleanup: true
+  on:
+    repo: api-platform/api-platform
+    branch: master
