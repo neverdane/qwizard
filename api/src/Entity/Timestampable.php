@@ -5,18 +5,18 @@ namespace App\Entity;
 trait Timestampable
 {
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    protected $createdAt;
+    protected $createdAt = null;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    protected $updatedAt = null;
 
     public function getCreatedAt()
     {
