@@ -56,13 +56,6 @@ class Quiz
         return $this->id;
     }
 
-    public function setId(int $id): Quiz
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
     /**
      * @return Question[]|Collection
      */

@@ -91,13 +91,6 @@ class Card
         return $this->id;
     }
 
-    public function setId(int $id): Card
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
     public function getSentence(): string
     {
         return $this->sentence;
