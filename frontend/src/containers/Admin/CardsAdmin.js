@@ -136,7 +136,7 @@ export default () => (
           </CardWrapper>
 
           {cards.reverse().map(({ id, question, response }) => (
-            <CardWrapper>
+            <CardWrapper key={`card-${id}`}>
               <Card
                 initialMode="summary"
                 key={id}
