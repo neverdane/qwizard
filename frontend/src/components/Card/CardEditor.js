@@ -20,6 +20,12 @@ class CardEditor extends React.Component {
     handleSubmit: e => {}
   };
 
+  input = null;
+
+  componentDidMount() {
+    setTimeout(() => this.input.focus(), 0);
+  }
+
   render() {
     const {
       mode,
@@ -40,6 +46,7 @@ class CardEditor extends React.Component {
         style={{ flexGrow: 1 }}
         value={question}
         autoFocus={true}
+        inputRef={input => (this.input = input)}
         startAdornment={
           <InputAdornment position="start">
             <FontAwesomeIcon
@@ -87,7 +94,7 @@ class CardEditor extends React.Component {
           placeholder="Labels"
           options={selectableLabels.map(label => ({
             label: label.name,
-            value: label.name,
+            value: label.name
           }))}
         />
 
