@@ -135,7 +135,7 @@ export default () => (
             </Mutation>
           </CardWrapper>
 
-          {cards.map(({ id, question, response }) => (
+          {cards.reverse().map(({ id, question, response }) => (
             <CardWrapper>
               <Card
                 initialMode="summary"
