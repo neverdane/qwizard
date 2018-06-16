@@ -6,7 +6,7 @@ import CardSummary from "../../components/Card/CardSummary";
 
 export default class extends React.Component {
   static propTypes = {
-    initialMode: PropTypes.string,
+    initialMode: PropTypes.string
   };
 
   constructor(props) {
@@ -24,11 +24,6 @@ export default class extends React.Component {
     });
   };
 
-  handleSubmit = data => {
-    console.log(data);
-    this.setState({ ...this.state, mode: "summary" });
-  };
-
   render() {
     const { mode } = this.state;
 
@@ -42,7 +37,7 @@ export default class extends React.Component {
         {["edition", "creation"].includes(mode) && (
           <CardEditor
             mode={mode}
-            handleSubmit={this.handleSubmit}
+            handleSubmit={this.props.handleSubmit}
             {...this.props}
           />
         )}
