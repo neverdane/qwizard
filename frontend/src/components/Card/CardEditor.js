@@ -37,6 +37,7 @@ class CardEditor extends React.Component {
       onLabelCreate,
       question,
       response,
+      menuPortal,
       labels
     } = this.props;
 
@@ -83,6 +84,7 @@ class CardEditor extends React.Component {
           style={{ flexGrow: 1, marginRight: "1.3rem" }}
           value={labels}
           formatCreateLabel={value => `Add label "${value}"`}
+          menuPortalTarget={menuPortal}
           startAdornment={
             <InputAdornment position="start">
               <FontAwesomeIcon
