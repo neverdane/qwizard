@@ -51,12 +51,14 @@ const ADD_CARD = gql`
   mutation createCard(
     $sentence: String!
     $answer: String!
+    $labels: [String]
     $clientMutationId: String!
   ) {
     createCard(
       input: {
         sentence: $sentence
         answer: $answer
+        labels: $labels
         clientMutationId: $clientMutationId
       }
     ) {
@@ -189,6 +191,7 @@ export default class extends React.Component {
                                   variables: {
                                     sentence: values.question,
                                     answer: values.response,
+                                    labels: values.labels.map(label => label.id),
                                     clientMutationId: "mutationId"
                                   }
                                 });
@@ -217,7 +220,7 @@ export default class extends React.Component {
                     enter={{ opacity: 1, transform: "scale(1)" }}
                     leave={{ opacity: 0, pointerEvents: "none" }}
                   >
-                    {cards.map(({ id, question, response }) => styles => {
+                    {cards.map(({ id, question, response, labels }) => styles => {
                       return (
                         <CardWrapper key={`card-${id}`} style={styles}>
                           <Card
@@ -225,7 +228,7 @@ export default class extends React.Component {
                             key={id}
                             question={question}
                             response={response}
-                            labels={[{ name: "histoire" }]}
+                            labels={labels}
                             selectableLabels={selectableLabels}
                           />
                         </CardWrapper>

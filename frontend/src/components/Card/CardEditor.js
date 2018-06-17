@@ -98,7 +98,8 @@ class CardEditor extends React.Component {
           placeholder="Labels"
           options={selectableLabels.map(label => ({
             label: label.name,
-            value: label.name
+            value: label.name,
+            id: label.id
           }))}
         />
 

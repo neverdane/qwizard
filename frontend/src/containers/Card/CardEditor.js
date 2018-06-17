@@ -10,7 +10,8 @@ export default withFormik({
       (props.labels &&
         props.labels.map(label => ({
           label: label.name,
-          value: label.name
+          value: label.name,
+          id: label.id
         }))) ||
       []
   }),
