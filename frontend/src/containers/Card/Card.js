@@ -37,7 +37,6 @@ export default class extends React.Component {
         {["edition", "creation"].includes(mode) && (
           <CardEditor
             mode={mode}
-            handleSubmit={this.props.handleSubmit}
             {...this.props}
           />
         )}
