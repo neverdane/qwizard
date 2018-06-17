@@ -14,6 +14,7 @@ const Container = styled(({ isFocused, ...otherProps }) => (
   flex-direction: column;
   position: relative;
   box-shadow: 0 0 3em -1em;
+  overflow: hidden;
 
   &:before {
     height: 0.2rem;
