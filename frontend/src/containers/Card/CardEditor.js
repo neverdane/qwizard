@@ -25,11 +25,19 @@ export default withFormik({
       onResponseChange={handleChange}
       onLabelsChange={value => setFieldValue("labels", value)}
       onLabelCreate={name => {
-        props.handleLabelCreate(name);
         setFieldValue("labels", [
           ...values.labels,
           { label: name, value: name }
         ]);
+
+        props
+          .handleLabelCreate(name)
+          .then(({ data: { createLabel: label } }) => {
+            return setFieldValue("labels", [
+              ...values.labels,
+              {label: label.name, value: label.name, id: label.id}
+            ]);
+          });
       }}
       {...props}
       {...values}

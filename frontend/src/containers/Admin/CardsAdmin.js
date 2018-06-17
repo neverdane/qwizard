@@ -191,19 +191,21 @@ export default class extends React.Component {
                                   variables: {
                                     sentence: values.question,
                                     answer: values.response,
-                                    labels: values.labels.map(label => label.id),
+                                    labels: values.labels.map(
+                                      label => label.id
+                                    ),
                                     clientMutationId: "mutationId"
                                   }
                                 });
                               }}
-                              handleLabelCreate={name => {
+                              handleLabelCreate={name =>
                                 createLabel({
                                   variables: {
                                     name: name,
                                     clientMutationId: "mutationId"
                                   }
-                                });
-                              }}
+                                })
+                              }
                               menuPortal={this.menuPortal}
                               selectableLabels={selectableLabels}
                             />
@@ -220,20 +222,22 @@ export default class extends React.Component {
                     enter={{ opacity: 1, transform: "scale(1)" }}
                     leave={{ opacity: 0, pointerEvents: "none" }}
                   >
-                    {cards.map(({ id, question, response, labels }) => styles => {
-                      return (
-                        <CardWrapper key={`card-${id}`} style={styles}>
-                          <Card
-                            initialMode="summary"
-                            key={id}
-                            question={question}
-                            response={response}
-                            labels={labels}
-                            selectableLabels={selectableLabels}
-                          />
-                        </CardWrapper>
-                      );
-                    })}
+                    {cards.map(
+                      ({ id, question, response, labels }) => styles => {
+                        return (
+                          <CardWrapper key={`card-${id}`} style={styles}>
+                            <Card
+                              initialMode="summary"
+                              key={id}
+                              question={question}
+                              response={response}
+                              labels={labels}
+                              selectableLabels={selectableLabels}
+                            />
+                          </CardWrapper>
+                        );
+                      }
+                    )}
                   </Transition>
 
                   <div ref={this.setMenuPortal} />
