@@ -4,7 +4,7 @@ import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
 import uuid from "uuid-v4";
-import {animated, Transition} from "react-spring";
+import { animated, Transition } from "react-spring";
 
 const CardWrapper = styled(animated.div)`
   &:not(:last-of-type) {
@@ -12,7 +12,7 @@ const CardWrapper = styled(animated.div)`
   }
 `;
 
-const queryCardsAndLabels = gql`
+const QUERY_CARDS = gql`
   {
     cards {
       edges {
@@ -31,6 +31,11 @@ const queryCardsAndLabels = gql`
         }
       }
     }
+  }
+`;
+
+const QUERY_LABELS = gql`
+  {
     labels {
       edges {
         node {
@@ -77,104 +82,107 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Query query={queryCardsAndLabels}>
-        {({ data: { cards: cardsNodes, labels }, loading }) => {
-          if (loading || !cardsNodes) return "loading";
+      <Query query={QUERY_CARDS}>
+        {({ data: { cards: cardsNodes }, loadingCards }) => (
+          <Query query={QUERY_LABELS}>
+            {({ data: { labels }, loadingLabels }) => {
+              if (loadingCards || loadingLabels || !cardsNodes)
+                return "loading";
 
-          const selectableLabels = labels.edges.map(({ node: label }) => label);
+              const selectableLabels = labels.edges.map(
+                ({ node: label }) => label
+              );
 
-          const cards = cardsNodes.edges.map(
-            ({ node: { id, sentence, answer, labels } }) => ({
-              id,
-              question: sentence,
-              response: answer,
-              labels: labels.edges
-                ? labels.edges.map(({ node: label }) => label)
-                : []
-            })
-          ).reverse();
+              const cards = cardsNodes.edges
+                .map(({ node: { id, sentence, answer, labels } }) => ({
+                  id,
+                  question: sentence,
+                  response: answer,
+                  labels: labels.edges
+                    ? labels.edges.map(({ node: label }) => label)
+                    : []
+                }))
+                .reverse();
 
-          return (
-            <React.Fragment>
-              <CardWrapper key={this.state.creationKey}>
-                <Mutation
-                  mutation={ADD_CARD}
-                  update={(cache, { data: { createCard } }) => {
-                    this.setState({
-                      creationKey: uuid()
-                    });
+              return (
+                <React.Fragment>
+                  <CardWrapper key={this.state.creationKey}>
+                    <Mutation
+                      mutation={ADD_CARD}
+                      update={(cache, { data: { createCard } }) => {
+                        this.setState({
+                          creationKey: uuid()
+                        });
 
-                    createCard.labels.edges = createCard.labels.edges || [];
-                    createCard.__typename = "Card";
+                        createCard.labels.edges = createCard.labels.edges || [];
+                        createCard.__typename = "Card";
 
-                    const { cards, labels } = cache.readQuery({
-                      query: queryCardsAndLabels
-                    });
+                        const { cards } = cache.readQuery({
+                          query: QUERY_CARDS
+                        });
 
-                    cache.writeQuery({
-                      query: queryCardsAndLabels,
-                      data: {
-                        cards: {
-                          ...cards,
-                          edges: [
-                            ...cards.edges,
-                            {
-                              node: createCard,
-                              __typename: "CardEdge"
+                        cache.writeQuery({
+                          query: QUERY_CARDS,
+                          data: {
+                            cards: {
+                              ...cards,
+                              edges: [
+                                ...cards.edges,
+                                {
+                                  node: createCard,
+                                  __typename: "CardEdge"
+                                }
+                              ]
                             }
-                          ]
-                        },
-                        labels
-                      }
-                    });
-                  }}
-                >
-                  {createCard => (
-                    <Card
-                      initialMode="creation"
-                      handleSubmit={values => {
-                        createCard({
-                          variables: {
-                            sentence: values.question,
-                            answer: values.response,
-                            clientMutationId: "mutationId"
                           }
                         });
                       }}
-                      selectableLabels={selectableLabels}
-                    />
-                  )}
-                </Mutation>
-              </CardWrapper>
-                <Transition
-                  native
-                  config={{ tension: 120, friction: 30 }}
-                  keys={cards.map(({ id }) => `card-${id}`)}
-                  from={{ opacity: 0, transform: 'scale(0)' }}
-                  enter={{ opacity: 1, transform: 'scale(1)' }}
-                  leave={{ opacity: 0, pointerEvents: 'none' }}>
-                {cards
-                  .map(({ id, question, response }) => styles => {
-                    return (
-                      <CardWrapper
-                        key={`card-${id}`}
-                        style={styles}
-                      >
+                    >
+                      {createCard => (
                         <Card
-                          initialMode="summary"
-                          key={id}
-                          question={question}
-                          response={response}
-                          labels={[{ name: "histoire" }]}
+                          initialMode="creation"
+                          handleSubmit={values => {
+                            createCard({
+                              variables: {
+                                sentence: values.question,
+                                answer: values.response,
+                                clientMutationId: "mutationId"
+                              }
+                            });
+                          }}
                           selectableLabels={selectableLabels}
                         />
-                      </CardWrapper>
-                    );
-                  })}
-                </Transition>
-            </React.Fragment>
-          );
-        }}
+                      )}
+                    </Mutation>
+                  </CardWrapper>
+                  <Transition
+                    native
+                    config={{ tension: 120, friction: 30 }}
+                    keys={cards.map(({ id }) => `card-${id}`)}
+                    from={{ opacity: 0, transform: "scale(0)" }}
+                    enter={{ opacity: 1, transform: "scale(1)" }}
+                    leave={{ opacity: 0, pointerEvents: "none" }}
+                  >
+                    {cards.map(({ id, question, response }) => styles => {
+                      return (
+                        <CardWrapper key={`card-${id}`} style={styles}>
+                          <Card
+                            initialMode="summary"
+                            key={id}
+                            question={question}
+                            response={response}
+                            labels={[{ name: "histoire" }]}
+                            selectableLabels={selectableLabels}
+                          />
+                        </CardWrapper>
+                      );
+                    })}
+                  </Transition>
+                </React.Fragment>
+              );
+            }}
+          </Query>
+        )}
       </Query>
     );
   }
