@@ -68,11 +68,11 @@ const selectStyles = {
     backgroundColor: "#2b2b2b",
     width: "auto",
     minWidth: "15rem",
-    fontSize: "0.6em",
-    margin: "0 0 0 .3em",
+    fontSize: "1rem",
+    margin: "0 0 0 .3rem",
     borderRadius: 0,
-    marginLeft: "-.5em",
-    left: "3.5em"
+    marginLeft: "-.5rem",
+    top: ".3rem",
   }),
   menuList: base => ({
     ...base,

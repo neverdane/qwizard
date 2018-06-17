@@ -89,6 +89,13 @@ export default class extends React.Component {
     creationKey: uuid()
   };
 
+  menuPortal = null;
+
+  setMenuPortal = element => {
+    this.menuPortal = element;
+    this.forceUpdate();
+  };
+
   render() {
     return (
       <Query query={QUERY_CARDS}>
@@ -194,6 +201,7 @@ export default class extends React.Component {
                                   }
                                 });
                               }}
+                              menuPortal={this.menuPortal}
                               selectableLabels={selectableLabels}
                             />
                           )}
@@ -224,6 +232,8 @@ export default class extends React.Component {
                       );
                     })}
                   </Transition>
+
+                  <div ref={this.setMenuPortal} />
                 </React.Fragment>
               );
             }}
