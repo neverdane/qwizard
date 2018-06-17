@@ -3,9 +3,10 @@ import Card from "../Card/Card";
 import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import uuid from 'uuid-v4';
+import uuid from "uuid-v4";
+import {animated, Transition} from "react-spring";
 
-const CardWrapper = styled.div`
+const CardWrapper = styled(animated.div)`
   &:not(:last-of-type) {
     margin-bottom: 1em;
   }
@@ -43,9 +44,9 @@ const queryCardsAndLabels = gql`
 
 const ADD_CARD = gql`
   mutation createCard(
-  $sentence: String!
-  $answer: String!
-  $clientMutationId: String!
+    $sentence: String!
+    $answer: String!
+    $clientMutationId: String!
   ) {
     createCard(
       input: {
@@ -91,7 +92,7 @@ export default class extends React.Component {
                 ? labels.edges.map(({ node: label }) => label)
                 : []
             })
-          );
+          ).reverse();
 
           return (
             <React.Fragment>
@@ -145,19 +146,32 @@ export default class extends React.Component {
                   )}
                 </Mutation>
               </CardWrapper>
-
-              {cards.reverse().map(({ id, question, response }) => (
-                <CardWrapper key={`card-${id}`}>
-                  <Card
-                    initialMode="summary"
-                    key={id}
-                    question={question}
-                    response={response}
-                    labels={[{ name: "histoire" }]}
-                    selectableLabels={selectableLabels}
-                  />
-                </CardWrapper>
-              ))}
+                <Transition
+                  native
+                  config={{ tension: 120, friction: 30 }}
+                  keys={cards.map(({ id }) => `card-${id}`)}
+                  from={{ opacity: 0, transform: 'scale(0)' }}
+                  enter={{ opacity: 1, transform: 'scale(1)' }}
+                  leave={{ opacity: 0, pointerEvents: 'none' }}>
+                {cards
+                  .map(({ id, question, response }) => styles => {
+                    return (
+                      <CardWrapper
+                        key={`card-${id}`}
+                        style={styles}
+                      >
+                        <Card
+                          initialMode="summary"
+                          key={id}
+                          question={question}
+                          response={response}
+                          labels={[{ name: "histoire" }]}
+                          selectableLabels={selectableLabels}
+                        />
+                      </CardWrapper>
+                    );
+                  })}
+                </Transition>
             </React.Fragment>
           );
         }}

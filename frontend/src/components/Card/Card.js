@@ -3,8 +3,7 @@ import styled, { css } from "styled-components";
 import theme from "../../theme";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/fontawesome-pro-light/index";
-import { Spring } from "react-spring";
-import { animated } from "react-spring";
+import { animated, Spring } from "react-spring";
 
 const Container = styled(({ isFocused, ...otherProps }) => (
   <section {...otherProps} />
