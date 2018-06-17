@@ -23,6 +23,13 @@ export default withFormik({
       onQuestionChange={handleChange}
       onResponseChange={handleChange}
       onLabelsChange={value => setFieldValue("labels", value)}
+      onLabelCreate={name => {
+        props.handleLabelCreate(name);
+        setFieldValue("labels", [
+          ...values.labels,
+          { label: name, value: name }
+        ]);
+      }}
       {...props}
       {...values}
     />

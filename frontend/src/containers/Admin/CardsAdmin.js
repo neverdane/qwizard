@@ -75,6 +75,15 @@ const ADD_CARD = gql`
   }
 `;
 
+const ADD_LABEL = gql`
+  mutation createLabel($name: String!, $clientMutationId: String!) {
+    createLabel(input: { name: $name, clientMutationId: $clientMutationId }) {
+      id
+      name
+    }
+  }
+`;
+
 export default class extends React.Component {
   state = {
     creationKey: uuid()
@@ -139,19 +148,56 @@ export default class extends React.Component {
                       }}
                     >
                       {createCard => (
-                        <Card
-                          initialMode="creation"
-                          handleSubmit={values => {
-                            createCard({
-                              variables: {
-                                sentence: values.question,
-                                answer: values.response,
-                                clientMutationId: "mutationId"
+                        <Mutation
+                          mutation={ADD_LABEL}
+                          update={(cache, { data: { createLabel } }) => {
+                            createLabel.__typename = "Label";
+
+                            const { labels } = cache.readQuery({
+                              query: QUERY_LABELS
+                            });
+
+                            cache.writeQuery({
+                              query: QUERY_LABELS,
+                              data: {
+                                labels: {
+                                  ...labels,
+                                  edges: [
+                                    ...labels.edges,
+                                    {
+                                      node: createLabel,
+                                      __typename: "LabelEdge"
+                                    }
+                                  ]
+                                }
                               }
                             });
                           }}
-                          selectableLabels={selectableLabels}
-                        />
+                        >
+                          {createLabel => (
+                            <Card
+                              initialMode="creation"
+                              handleSubmit={values => {
+                                createCard({
+                                  variables: {
+                                    sentence: values.question,
+                                    answer: values.response,
+                                    clientMutationId: "mutationId"
+                                  }
+                                });
+                              }}
+                              handleLabelCreate={name => {
+                                createLabel({
+                                  variables: {
+                                    name: name,
+                                    clientMutationId: "mutationId"
+                                  }
+                                });
+                              }}
+                              selectableLabels={selectableLabels}
+                            />
+                          )}
+                        </Mutation>
                       )}
                     </Mutation>
                   </CardWrapper>

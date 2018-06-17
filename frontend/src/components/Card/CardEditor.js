@@ -34,6 +34,7 @@ class CardEditor extends React.Component {
       onQuestionChange,
       onResponseChange,
       onLabelsChange,
+      onLabelCreate,
       question,
       response,
       labels
@@ -78,6 +79,7 @@ class CardEditor extends React.Component {
         <Autocomplete
           name="labels"
           onChange={onLabelsChange}
+          onCreateOption={onLabelCreate}
           style={{ flexGrow: 1, marginRight: "1.3rem" }}
           value={labels}
           formatCreateLabel={value => `Add label "${value}"`}
