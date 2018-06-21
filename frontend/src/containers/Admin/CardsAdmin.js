@@ -47,6 +47,24 @@ const QUERY_LABELS = gql`
   }
 `;
 
+const QUERY_CARD = gql`
+  query getCard($id: ID!) {
+    card(id: $id) {
+      id
+      sentence
+      answer
+      labels {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
 const ADD_CARD = gql`
   mutation createCard(
     $sentence: String!
@@ -101,7 +119,7 @@ export default class extends React.Component {
   render() {
     return (
       <Query query={QUERY_CARDS}>
-        {({ data: { cards: cardsNodes }, loadingCards }) => (
+        {({ data: { cards: cardsNodes }, client, loadingCards }) => (
           <Query query={QUERY_LABELS}>
             {({ data: { labels }, loadingLabels }) => {
               if (loadingCards || loadingLabels || !cardsNodes)
@@ -127,12 +145,17 @@ export default class extends React.Component {
                   <CardWrapper key={this.state.creationKey}>
                     <Mutation
                       mutation={ADD_CARD}
-                      update={(cache, { data: { createCard } }) => {
+                      update={async (cache, { data: { createCard } }) => {
+                        const { data: {card: createdCard} } = await client.query({
+                          query: QUERY_CARD,
+                          variables: { id: createCard.id }
+                        });
+
                         this.setState({
                           creationKey: uuid()
                         });
 
-                        createCard.labels.edges = createCard.labels.edges || [];
+                        createCard.labels = createdCard.labels;
                         createCard.__typename = "Card";
 
                         const { cards } = cache.readQuery({
