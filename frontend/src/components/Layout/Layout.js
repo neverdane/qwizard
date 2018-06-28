@@ -1,10 +1,14 @@
 import React from "react";
-import styled from "styled-components";
+import Sidebar from "./Sidebar";
+import {Flex} from "grid-styled";
 
-export default styled(props => {
-  return <div {...props} />;
-})`
-  background-color: ${props => props.theme.colors.black};
-  min-height: 100%;
-  padding: 5em;
+const Layout = Flex.extend`
+  height: 100%;
 `;
+
+export default ({children, ...props}) => {
+  return <Layout {...props}>
+    <Sidebar/>
+    {children}
+  </Layout>;
+};

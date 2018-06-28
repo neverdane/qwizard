@@ -1,3 +1,5 @@
+import {darken} from "polished";
+
 const theme = {
   colors: {
     black: '#222222',
@@ -16,7 +18,8 @@ const theme = {
 };
 
 theme.colors.primary = theme.colors.blue;
-theme.text.fonts.primary = theme.text.fonts.serif;
+theme.colors.darkPrimary = darken(0.25, theme.colors.primary);
+theme.text.fonts.primary = theme.text.fonts.sansSerif;
 theme.text.fonts.secondary = theme.text.fonts.sansSerif;
 
 export default theme;
