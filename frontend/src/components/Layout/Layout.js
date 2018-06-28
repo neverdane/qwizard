@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
 import {Flex} from "grid-styled";
 
 const Layout = Flex.extend`
@@ -8,7 +8,7 @@ const Layout = Flex.extend`
 
 export default ({children, ...props}) => {
   return <Layout {...props}>
-    <Sidebar/>
+    <Navbar/>
     {children}
   </Layout>;
 };
