@@ -3,13 +3,32 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import theme from "../../theme";
 import { DateTime } from "luxon";
+import { Flex } from "grid-styled";
+import styled from "styled-components";
 
-export const defaultOptions = {
+export const QuestionsChartContainer = Flex.extend`
+  flex-direction: column;
+  border-bottom: 0.05em solid rgba(255, 255, 255, 0.05);
+  padding: 1em;
+`;
+
+export const QuestionsChartTitle = styled.span`
+  color: rgba(255, 255, 255, 0.25);
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  margin: 1em 0 0;
+`;
+
+const defaultOptions = {
+  title: {
+    text:null
+  },
   chart: {
     type: "spline",
-    margin: [30, 20, 100, 20],
+    margin: [10, 10, 10, 10],
     backgroundColor: "transparent",
-    height: "200px"
+    height: "95px"
   },
   credits: {
     enabled: false
