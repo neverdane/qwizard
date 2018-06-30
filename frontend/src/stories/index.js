@@ -12,6 +12,8 @@ import Button from "../components/Button/Button";
 import Card from "../components/Card/Card";
 import CardEditor from "../components/Card/CardEditor";
 import CardSummary from "../components/Card/CardSummary";
+import QuestionsChart from "../components/Chart/QuestionsChart";
+import { DateTime } from "luxon";
 
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
@@ -88,3 +90,55 @@ storiesOf("Input", module)
 storiesOf("Button", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
   .add("default", () => <Button>Add Question</Button>);
+
+storiesOf("Chart", module)
+  .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
+  .add("questions", () => {
+    const dates = [...Array(30).keys()].reverse().map(numberOfDays => {
+      return DateTime.local()
+        .minus({ days: numberOfDays })
+        .valueOf();
+    });
+
+    const data = [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      12,
+      15,
+      35,
+      13,
+      25,
+      26,
+      16,
+      37,
+      57,
+      0,
+      34,
+      24,
+      14,
+      36,
+      24,
+      34,
+      0,
+      2,
+      0,
+      35,
+      46,
+      24
+    ].map((value, index) => ({
+      x: dates[index],
+      y: value
+    }));
+
+    return (
+      <div style={{ background: theme.colors.dark }}>
+        <QuestionsChart series={[{data }]} />
+      </div>
+    );
+  });
