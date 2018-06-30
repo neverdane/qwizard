@@ -1,7 +1,5 @@
 import React from "react";
-import SvgLogo from "./Logo";
 import { Flex } from "grid-styled";
-import Menu from "./Menu";
 
 const Container = Flex.extend`
   width: 17em;
@@ -10,9 +8,4 @@ const Container = Flex.extend`
   background: ${props => props.theme.colors.dark};
 `;
 
-export default ({ children, ...props }) => {
-  return (
-    <Container {...props}>
-    </Container>
-  );
-};
+export default Container;
