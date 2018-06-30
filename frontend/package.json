@@ -19,6 +19,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-apollo": "^2.1.4",
+    "react-countup": "^3.0.3",
     "react-dom": "^16.3.2",
     "react-pose": "^2.0.0",
     "react-redux": "^5.0.7",
