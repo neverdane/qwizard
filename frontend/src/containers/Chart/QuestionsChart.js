@@ -1,9 +1,7 @@
 import React from "react";
 import { DateTime } from "luxon";
-import QuestionsChart, {
-  QuestionsChartContainer,
-  QuestionsChartTitle
-} from "../../components/Chart/QuestionsChart";
+import QuestionsChart from "../../components/Chart/QuestionsChart";
+import {StatsContainer, StatsTitle} from "../../components/Stats/Stats";
 
 export default () => {
   const dates = [...Array(30).keys()].reverse().map(numberOfDays => {
@@ -49,9 +47,9 @@ export default () => {
   }));
 
   return (
-    <QuestionsChartContainer>
+    <StatsContainer>
       <QuestionsChart series={[{ data }]} />
-      <QuestionsChartTitle>Asked Questions</QuestionsChartTitle>
-    </QuestionsChartContainer>
+      <StatsTitle>Asked Questions</StatsTitle>
+    </StatsContainer>
   );
 };
