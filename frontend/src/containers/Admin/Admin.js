@@ -1,12 +1,12 @@
 import React from "react";
 import CardsAdmin from "./CardsAdmin";
 import Sidebar from "../../components/Layout/Sidebar";
-import QuestionsChart from "../Stats/QuestionsChart";
+import AskedQuestionsEvolution from "../Stats/AskedQuestionsEvolution";
 
 export default () => (
   <React.Fragment>
     <Sidebar>
-      <QuestionsChart />
+      <AskedQuestionsEvolution />
     </Sidebar>
     <CardsAdmin />
   </React.Fragment>
