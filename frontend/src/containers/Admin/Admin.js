@@ -1,7 +1,7 @@
 import React from "react";
 import CardsAdmin from "./CardsAdmin";
 import Sidebar from "../../components/Layout/Sidebar";
-import QuestionsChart from "../Chart/QuestionsChart";
+import QuestionsChart from "../Stats/QuestionsChart";
 
 export default () => (
   <React.Fragment>
