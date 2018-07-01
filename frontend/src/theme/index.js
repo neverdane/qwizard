@@ -1,19 +1,20 @@
-import {darken} from "polished";
+import { darken } from "polished";
 
 const theme = {
   colors: {
-    black: '#222222',
-    dark: '#333333',
-    blue: '#8BC9CF',
-    transparentDark: 'rgba(0, 0, 0, 0.2)',
-    transparentWhite: 'rgba(255, 255, 255, 0.2)',
-    red: '#E68B52',
+    black: "#222222",
+    dark: "#333333",
+    blue: "#8BC9CF",
+    transparentDark: "rgba(0, 0, 0, 0.2)",
+    transparentWhite: "rgba(255, 255, 255, 0.2)",
+    red: "#E68B52",
+    green: "#BDCF8B"
   },
   text: {
     fonts: {
       serif: '"Playfair Display", serif',
-      sansSerif: 'Oswald, sans-serif',
-    },
+      sansSerif: "Oswald, sans-serif"
+    }
   }
 };
 
