@@ -138,7 +138,7 @@ storiesOf("Chart", module)
 
     return (
       <div style={{ background: theme.colors.dark }}>
-        <QuestionsChart series={[{data }]} />
+        <QuestionsChart series={[{ data }]} />
       </div>
     );
   });
