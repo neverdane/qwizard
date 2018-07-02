@@ -10,6 +10,7 @@ export const StatsTitle = styled.span`
 
 const containerStyleAccordingToDirection = props => {
   const direction = props.direction || "column";
+  const titlePosition = props.titlePosition || "default";
   let titleAlignment = "center";
   let titleMargin = "1em 0 0";
   let alignItems = "inherit";
@@ -17,6 +18,11 @@ const containerStyleAccordingToDirection = props => {
   switch (direction) {
     default:
     case "column":
+      if (titlePosition === "topLeft") {
+        titleAlignment = "left";
+        titleMargin = "0 0 1em";
+      }
+
       break;
     case "row":
       titleAlignment = "left";
