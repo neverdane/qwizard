@@ -3,9 +3,10 @@ import { darken } from "polished";
 const theme = {
   colors: {
     black: "#222222",
+    white: '#FAFAFA',
     dark: "#333333",
     blue: "#8BC9CF",
-    transparentDark: "rgba(0, 0, 0, 0.2)",
+    transparentDark: "rgba(0, 0, 0, 0.03)",
     transparentWhite: "rgba(255, 255, 255, 0.2)",
     red: "#E68B52",
     green: "#BDCF8B"

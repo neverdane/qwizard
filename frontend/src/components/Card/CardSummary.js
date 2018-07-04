@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AnimatedRow as Row } from "./Card";
+import { Row } from "./Card";
 import Tag from "./Tag";
 import { Flex } from "grid-styled";
 import { Trail } from "react-spring";

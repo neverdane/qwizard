@@ -12,7 +12,7 @@ export const InputAdornment = withStyles({
 export default withStyles({
   root: {
     background: theme.colors.transparentDark,
-    color: 'white',
+    color: theme.colors.dark,
     fontSize: '1.6rem',
     padding: '0.3rem 1rem',
     lineHeight: 'normal',
@@ -20,6 +20,7 @@ export default withStyles({
   input: {
     padding: '0 0 0.3rem',
     '&::-webkit-input-placeholder': {
+      color: theme.colors.dark,
       opacity: 0.1
     },
   },

@@ -9,7 +9,7 @@ const selectStyles = {
   container: () => ({
     flexGrow: 1,
     background: theme.colors.transparentDark,
-    color: "white",
+    color: theme.colors.dark,
     fontSize: "1.6rem",
     padding: "0.3rem 1rem",
     lineHeight: "normal"
@@ -28,7 +28,7 @@ const selectStyles = {
   }),
   placeholder: base => ({
     ...base,
-    color: "white",
+    color: theme.colors.dark,
     opacity: 0.1
   }),
   multiValue: base => ({

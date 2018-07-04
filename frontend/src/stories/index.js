@@ -18,7 +18,6 @@ import { DateTime } from "luxon";
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
   .add("creation", () => (
-    <Card isZipDisplayed={false}>
       <CardEditor
         mode="creation"
         selectableLabelsOptions={[
@@ -28,10 +27,8 @@ storiesOf("Card", module)
           { label: "cinéma", value: "cinéma" }
         ]}
       />
-    </Card>
   ))
   .add("edition", () => (
-    <Card>
       <CardEditor
         mode="edition"
         question="En quelle année a eu lieu la bataille de Marignan ?"
@@ -44,16 +41,13 @@ storiesOf("Card", module)
           { label: "cinéma", value: "cinéma" }
         ]}
       />
-    </Card>
   ))
   .add("summary", () => (
-    <Card>
       <CardSummary
         question="En quelle année a eu lieu la bataille de Marignan ?"
         response="1515"
         labels={[{ name: "histoire" }]}
       />
-    </Card>
   ));
 
 storiesOf("Input", module)

@@ -1,10 +1,11 @@
 import React from "react";
-import Card from "../Card/Card";
+import CardEditor from "../Card/CardEditor";
 import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
 import uuid from "uuid-v4";
 import { animated, Transition } from "react-spring";
+import CardSummary from "../../components/Card/CardSummary";
 
 const CardWrapper = styled(animated.div)`
   &:not(:last-of-type) {
@@ -142,7 +143,6 @@ export default class extends React.Component {
 
               return (
                 <React.Fragment>
-                  <CardWrapper key={this.state.creationKey}>
                     <Mutation
                       mutation={ADD_CARD}
                       update={async (cache, { data: { createCard } }) => {
@@ -207,7 +207,8 @@ export default class extends React.Component {
                           }}
                         >
                           {createLabel => (
-                            <Card
+                            <CardEditor
+                              key={this.state.creationKey}
                               initialMode="creation"
                               handleSubmit={values => {
                                 createCard({
@@ -236,7 +237,6 @@ export default class extends React.Component {
                         </Mutation>
                       )}
                     </Mutation>
-                  </CardWrapper>
                   <Transition
                     native
                     config={{ tension: 120, friction: 30 }}
@@ -249,8 +249,7 @@ export default class extends React.Component {
                       ({ id, question, response, labels }) => styles => {
                         return (
                           <CardWrapper key={`card-${id}`} style={styles}>
-                            <Card
-                              initialMode="summary"
+                            <CardSummary
                               key={id}
                               question={question}
                               response={response}

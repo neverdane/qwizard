@@ -9,7 +9,7 @@ import {
 import theme from "../../theme/index";
 import Autocomplete from "../Form/Autocomplete";
 import Button from "../Button/Button";
-import { AnimatedRow as Row } from "./Card";
+import { Row } from "./Card";
 import { Trail } from "react-spring";
 
 class CardEditor extends React.Component {

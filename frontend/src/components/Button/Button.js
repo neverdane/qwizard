@@ -21,7 +21,7 @@ export default styled(withStyles({
 
     &&:focus, &&:hover {
       background-color: ${props => props.color || props.theme.colors.primary};
-      color: ${props => props.theme.colors.dark};
+      color: ${props => props.theme.colors.white};
       border-color: ${props => props.color || props.theme.colors.primary};
     }
   }
