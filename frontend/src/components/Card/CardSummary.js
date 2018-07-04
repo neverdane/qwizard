@@ -6,7 +6,7 @@ import { Flex } from "grid-styled";
 import { Trail } from "react-spring";
 
 const Title = styled.h3`
-  color: white;
+  color: ${props => props.theme.colors.dark};
   font-size: 1.6rem;
 `;
 
@@ -14,7 +14,9 @@ export default ({ question, labels = [] }) => {
   const rows = [
     <React.Fragment>
       <Title style={{ flexGrow: 1, marginRight: "1.3rem" }}>{question}</Title>
-      <Flex>{labels.map(label => <Tag key={label.name}>{label.name}</Tag>)}</Flex>
+      <Flex>
+        {labels.map(label => <Tag key={label.name}>{label.name}</Tag>)}
+      </Flex>
     </React.Fragment>
   ];
 
