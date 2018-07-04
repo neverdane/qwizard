@@ -10,6 +10,7 @@ const Container = Flex.extend`
 export const Section = Flex.extend`
   flex-direction: column;
   padding: 1em 2em;
+  flex-shrink: 0;
 `;
 
 export const Title = styled.span`
