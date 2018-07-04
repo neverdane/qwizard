@@ -8,9 +8,7 @@ export const StatsTitle = styled.span`
   font-size: 0.8em;
 `;
 
-const containerStyleAccordingToDirection = props => {
-  const direction = props.direction || "column";
-  const titlePosition = props.titlePosition || "default";
+const containerStyleAccordingToDirection = ({ direction, titlePosition }) => {
   let titleAlignment = "center";
   let titleMargin = "1em 0 0";
   let alignItems = "inherit";
@@ -49,11 +47,53 @@ const containerStyleAccordingToDirection = props => {
   `;
 };
 
-export const StatsContainer = styled(({ direction, ...otherProps }) => (
-  <Flex {...otherProps} />
-))`
-  border-bottom: 0.05em solid rgba(255, 255, 255, 0.05);
+export const StatsFloatingContent = Flex.extend`
+  flex-direction: column;
   padding: 1em;
-
-  ${props => containerStyleAccordingToDirection(props)};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: center;
 `;
+
+export const StatsContainer = styled(
+  ({
+    padded,
+    bordered,
+    titlePosition,
+    backgroundMode,
+    direction,
+    ...otherProps
+  }) => <Flex {...otherProps} />
+)`
+  position: relative;
+  flex-direction: column;
+
+  ${props =>
+    props.padded &&
+    css`
+      border-bottom: 0.05em solid rgba(255, 255, 255, 0.05);
+    `};
+  ${props =>
+    props.bordered &&
+    css`
+      padding: 1em;
+    `};
+
+  ${props =>
+    props.backgroundMode === "dark" &&
+    css`
+      background-color: rgba(0, 0, 0, 0.4);
+    `};
+
+  ${props => props.direction !== 'none' && containerStyleAccordingToDirection(props)};
+`;
+
+StatsContainer.defaultProps = {
+  padded: true,
+  bordered: true,
+  direction: "column",
+  titlePosition: "default",
+};
