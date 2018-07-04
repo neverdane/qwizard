@@ -8,6 +8,7 @@ const theme = {
     blue: "#8BC9CF",
     transparentDark: "rgba(0, 0, 0, 0.03)",
     transparentWhite: "rgba(255, 255, 255, 0.2)",
+    transparentGrey: "#E9E9E9",
     red: "#E68B52",
     green: "#BDCF8B"
   },
