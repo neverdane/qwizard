@@ -14,6 +14,7 @@ import CardEditor from "../components/Card/CardEditor";
 import CardSummary from "../components/Card/CardSummary";
 import QuestionsChart from "../components/Chart/QuestionsChart";
 import { DateTime } from "luxon";
+import Tag from "../components/Card/Tag";
 
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
@@ -84,6 +85,10 @@ storiesOf("Input", module)
 storiesOf("Button", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
   .add("default", () => <Button>Add Question</Button>);
+
+storiesOf("Tag", module)
+  .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
+  .add("default", () => <Tag>histoire</Tag>);
 
 storiesOf("Chart", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
