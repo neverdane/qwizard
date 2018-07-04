@@ -5,6 +5,7 @@ import AskedQuestionsEvolution from "../Stats/AskedQuestionsEvolution";
 import CoveredQuestionsCount from "../Stats/CoveredQuestionsCount";
 import CorrectAnswersCount from "../Stats/CorrectAnswersCount";
 import MostUsedLabelsDistribution from "../Stats/MostUsedLabelsDistribution";
+import TotalQuestionsCount from "../Stats/TotalQuestionsCount";
 
 export default () => (
   <React.Fragment>
@@ -13,6 +14,7 @@ export default () => (
       <CoveredQuestionsCount />
       <CorrectAnswersCount />
       <MostUsedLabelsDistribution />
+      <TotalQuestionsCount flex={1} />
     </Sidebar>
     <CardsAdmin />
   </React.Fragment>
