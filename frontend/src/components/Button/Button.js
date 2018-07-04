@@ -8,16 +8,16 @@ export default styled(withStyles({
   root: {
     backgroundColor: 'transparent',
     borderRadius: '0',
-    borderWidth: '0.05em',
+    borderWidth: '0.1em',
     borderStyle: 'solid',
     fontFamily: `${theme.text.fonts.secondary}`,
     fontSize: '1rem',
-    fontWeight: 300,
     minWidth: 0
   }
 })(({color, ...otherProps}) => <Button disableFocusRipple={true} {...otherProps} />))`
   && {
     color: ${props => props.color || props.theme.colors.primary};
+    font-weight: 400;
 
     &&:focus, &&:hover {
       background-color: ${props => props.color || props.theme.colors.primary};

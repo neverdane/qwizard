@@ -65,7 +65,7 @@ const selectStyles = {
   }),
   menu: base => ({
     ...base,
-    backgroundColor: "#2b2b2b",
+    backgroundColor: theme.colors.dark,
     width: "auto",
     minWidth: "15rem",
     fontSize: "1rem",
