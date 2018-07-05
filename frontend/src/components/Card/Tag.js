@@ -6,11 +6,12 @@ const Container = Flex.extend`
   background-color: ${props => props.theme.colors.blue};
   color: ${props => props.theme.colors.white};
   font-size: 0.8rem;
-  padding: 0 0.7em 0 0.5em;
+  padding: 0.15em 0.7em 0.15em 0.5em;
   position: relative;
   margin: 0 0.6em 0 0.9em;
   align-items: center;
-  line-height: 1.3rem;
+  line-height: 1.3em;
+  z-index: 0;
 
   &:before {
     content: "";

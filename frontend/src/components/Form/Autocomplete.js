@@ -4,20 +4,21 @@ import { components } from "react-select";
 import PropTypes from "prop-types";
 import theme from "../../theme/index";
 import styled from "styled-components";
+import Tag from "../Card/Tag";
 
 const selectStyles = {
   container: () => ({
     flexGrow: 1,
     background: theme.colors.transparentDark,
     color: theme.colors.dark,
-    fontSize: "1.3rem",
-    padding: "0.3rem 1rem",
+    fontSize: "1.3em",
+    padding: "0.3em 1em",
     lineHeight: "normal"
   }),
   input: () => ({}),
   valueContainer: base => ({
     ...base,
-    padding: "0 0 0.3rem"
+    padding: "0.1em 0 0.1em"
   }),
   control: () => ({
     cursor: "text",
@@ -32,20 +33,11 @@ const selectStyles = {
     opacity: 0.1
   }),
   multiValue: base => ({
-    ...base,
-    backgroundColor: theme.colors.primary,
-    color: theme.colors.dark,
-    fontSize: "0.6em",
-    borderRadius: "1em",
-    padding: "0 0.2em 0 0.4em",
-    position: "relative",
-    bottom: "-0.2em",
-    margin: "0 0.6em 0 0"
+    display: "flex"
   }),
   multiValueLabel: base => ({
-    ...base,
-    color: theme.colors.dark,
-    padding: "0 0 0.25em"
+    color: theme.colors.white,
+    padding: "0.1em 0 0.15em"
   }),
   multiValueRemove: (base, { isFocused }) => ({
     ...base,
@@ -61,7 +53,10 @@ const selectStyles = {
       cursor: "pointer",
       color: "inherit",
       opacity: 0.5
-    }
+    },
+    position: "relative",
+    left: "0.2em",
+    marginRight: "-0.3em"
   }),
   menu: base => ({
     ...base,
@@ -72,7 +67,7 @@ const selectStyles = {
     margin: "0 0 0 .3rem",
     borderRadius: 0,
     marginLeft: "-.5rem",
-    top: ".3rem",
+    top: ".3rem"
   }),
   menuList: base => ({
     ...base,
@@ -113,6 +108,12 @@ const SelectContainer = styled(({ startAdornment, children, ...props }) => {
   }
 `;
 
+const MultiValueContainer = props => (
+  <Tag>
+    <components.MultiValueContainer {...props} />
+  </Tag>
+);
+
 export default class extends React.PureComponent {
   static propTypes = {
     options: PropTypes.array
@@ -125,14 +126,15 @@ export default class extends React.PureComponent {
   render() {
     return (
       <div style={this.props.style}>
-      <Select
-        isMulti
-        styles={selectStyles}
-        components={{
-          SelectContainer: this.renderSelectContainer
-        }}
-        {...this.props}
-      />
+        <Select
+          isMulti
+          styles={selectStyles}
+          components={{
+            SelectContainer: this.renderSelectContainer,
+            MultiValueContainer
+          }}
+          {...this.props}
+        />
       </div>
     );
   }
