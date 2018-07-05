@@ -14,7 +14,7 @@ const rowStyles = css`
   flex-grow: 1;
   align-items: center;
   &:not(:first-of-type) {
-    margin-top: 1.3rem;
+    margin-top: 0.8em;
   }
 `;
 

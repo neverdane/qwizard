@@ -10,7 +10,7 @@ const selectStyles = {
     flexGrow: 1,
     background: theme.colors.transparentDark,
     color: theme.colors.dark,
-    fontSize: "1.6rem",
+    fontSize: "1.3rem",
     padding: "0.3rem 1rem",
     lineHeight: "normal"
   }),

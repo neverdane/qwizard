@@ -81,7 +81,7 @@ class CardEditor extends React.Component {
           name="labels"
           onChange={onLabelsChange}
           onCreateOption={onLabelCreate}
-          style={{ flexGrow: 1, marginRight: "1.3rem" }}
+          style={{ flexGrow: 1, marginRight: "0.8rem" }}
           value={labels}
           formatCreateLabel={value => `Add label "${value}"`}
           menuPortalTarget={menuPortal}
