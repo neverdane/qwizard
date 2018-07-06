@@ -18,15 +18,15 @@ use App\Controller\QuestionResponse;
  *
  * @ApiResource(
  *     graphql={
- *         "query",
- *         "delete",
- *         "update",
- *         "create",
- *         "answer"={
- *         "controller"=QuestionResponse::class
+ *          "query",
+ *          "delete",
+ *          "update",
+ *          "create",
+ *          "answer"={
+ *              "controller"=QuestionResponse::class
+ *          }
  *     }
- *     }
- *   )
+ * )
  */
 class Card
 {
