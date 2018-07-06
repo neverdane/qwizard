@@ -58,7 +58,7 @@ class Card
     /**
      * @var Collection|Question[]
      *
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="sentence")
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="card")
      */
     private $questions;
 
