@@ -5,17 +5,11 @@ import gql from "graphql-tag";
 import styled from "styled-components";
 import uuid from "uuid-v4";
 import { animated, Transition } from "react-spring";
-import CardSummary from "../../components/Card/CardSummary";
-
-const CardWrapper = styled(animated.div)`
-  &:not(:last-of-type) {
-    margin-bottom: 1em;
-  }
-`;
+import CardSummary, {List} from "../../components/Card/CardSummary";
 
 const QUERY_CARDS = gql`
   {
-    cards {
+    cards(first: 5, order: {createdAt: "DESC"}) {
       edges {
         node {
           id
@@ -136,7 +130,7 @@ export default class extends React.Component {
             .reverse();
 
           return (
-            <React.Fragment>
+            <List>
               <Transition
                 native
                 config={{ tension: 120, friction: 30 }}
@@ -147,20 +141,20 @@ export default class extends React.Component {
               >
                 {cards.map(({ id, question, response, labels }) => styles => {
                   return (
-                    <CardWrapper key={`card-${id}`} style={styles}>
+                    <animated.div key={`card-${id}`} style={styles}>
                       <CardSummary
                         key={id}
                         question={question}
                         response={response}
                         labels={labels}
                       />
-                    </CardWrapper>
+                    </animated.div>
                   );
                 })}
               </Transition>
 
               <div ref={this.setMenuPortal} />
-            </React.Fragment>
+            </List>
           );
         }}
       </Query>
