@@ -2,7 +2,7 @@ import React from "react";
 import { StatsContainer, StatsTitle } from "../../components/Stats/Stats";
 import HorizontalBars from "../../components/Chart/HorizontalBars";
 
-export default () => {
+export default props => {
   const labels = [
     {
       name: "Histoire",
@@ -23,7 +23,7 @@ export default () => {
   ];
 
   return (
-    <StatsContainer titlePosition="topLeft">
+    <StatsContainer titlePosition="topLeft" {...props}>
       <StatsTitle>Most Used Labels</StatsTitle>
       <HorizontalBars data={labels} total={1050} />
     </StatsContainer>

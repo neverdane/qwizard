@@ -1,9 +1,9 @@
 import React from "react";
 import { DateTime } from "luxon";
 import QuestionsChart from "../../components/Chart/QuestionsChart";
-import {StatsContainer, StatsTitle} from "../../components/Stats/Stats";
+import { StatsContainer, StatsTitle } from "../../components/Stats/Stats";
 
-export default () => {
+export default props => {
   const dates = [...Array(30).keys()].reverse().map(numberOfDays => {
     return DateTime.local()
       .minus({ days: numberOfDays })
@@ -47,7 +47,7 @@ export default () => {
   }));
 
   return (
-    <StatsContainer>
+    <StatsContainer {...props}>
       <QuestionsChart series={[{ data }]} />
       <StatsTitle>Asked Questions</StatsTitle>
     </StatsContainer>
