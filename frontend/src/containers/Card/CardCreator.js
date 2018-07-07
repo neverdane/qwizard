@@ -1,80 +1,10 @@
 import React from "react";
 import CardEditor from "./CardEditor";
-import { Mutation, Query } from "react-apollo";
-import gql from "graphql-tag";
 import uuid from "uuid-v4";
 import { Transition } from "react-spring";
-import { QUERY_CARDS } from "./LastCardsSummaries";
-
-const QUERY_LABELS = gql`
-  {
-    labels {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
-const QUERY_CARD = gql`
-  query getCard($id: ID!) {
-    card(id: $id) {
-      id
-      sentence
-      answer
-      labels {
-        edges {
-          node {
-            id
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
-const ADD_CARD = gql`
-  mutation createCard(
-    $sentence: String!
-    $answer: String!
-    $labels: [String]
-    $clientMutationId: String!
-  ) {
-    createCard(
-      input: {
-        sentence: $sentence
-        answer: $answer
-        labels: $labels
-        clientMutationId: $clientMutationId
-      }
-    ) {
-      id
-      sentence
-      answer
-      labels {
-        edges {
-          node {
-            id
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
-const ADD_LABEL = gql`
-  mutation createLabel($name: String!, $clientMutationId: String!) {
-    createLabel(input: { name: $name, clientMutationId: $clientMutationId }) {
-      id
-      name
-    }
-  }
-`;
+import LabelsQuery from "../Apollo/LabelsQuery";
+import AddCardMutation from "../Apollo/AddCardMutation";
+import AddLabelMutation from "../Apollo/AddLabelMutation";
 
 export default class extends React.Component {
   state = {
@@ -90,7 +20,7 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Query query={QUERY_LABELS}>
+      <LabelsQuery>
         {({ data: { labels }, client, loadingLabels }) => {
           if (loadingLabels || !labels) return "loading";
 
@@ -98,80 +28,14 @@ export default class extends React.Component {
 
           return (
             <React.Fragment>
-              <Mutation
-                mutation={ADD_CARD}
-                update={async (cache, { data: { createCard } }) => {
-                  const {
-                    data: { card: createdCard }
-                  } = await client.query({
-                    query: QUERY_CARD,
-                    variables: { id: createCard.id }
-                  });
-
-                  this.setState({
-                    creationKey: uuid()
-                  });
-
-                  createCard.labels = createdCard.labels;
-                  createCard.__typename = "Card";
-
-                  const { cards } = cache.readQuery({
-                    query: QUERY_CARDS
-                  });
-
-                  if (cards.edges.length >= 5) {
-                    cards.edges.splice(-1, 1);
-                  }
-
-                  cache.writeQuery({
-                    query: QUERY_CARDS,
-                    data: {
-                      cards: {
-                        ...cards,
-                        edges: [
-                          {
-                            node: createCard,
-                            __typename: "CardEdge"
-                          },
-                          ...cards.edges
-                        ]
-                      }
-                    }
-                  });
-                }}
-              >
+              <AddCardMutation client={client}>
                 {createCard => (
-                  <Mutation
-                    mutation={ADD_LABEL}
-                    update={(cache, { data: { createLabel } }) => {
-                      createLabel.__typename = "Label";
-
-                      const { labels } = cache.readQuery({
-                        query: QUERY_LABELS
-                      });
-
-                      cache.writeQuery({
-                        query: QUERY_LABELS,
-                        data: {
-                          labels: {
-                            ...labels,
-                            edges: [
-                              ...labels.edges,
-                              {
-                                node: createLabel,
-                                __typename: "LabelEdge"
-                              }
-                            ]
-                          }
-                        }
-                      });
-                    }}
-                  >
+                  <AddLabelMutation>
                     {createLabel => (
                       <CardEditor
                         key={this.state.creationKey}
                         initialMode="creation"
-                        handleSubmit={values => {
+                        handleSubmit={(values, resetForm) => {
                           createCard({
                             variables: {
                               sentence: values.question,
@@ -180,6 +44,7 @@ export default class extends React.Component {
                               clientMutationId: "mutationId"
                             }
                           });
+                          resetForm();
                         }}
                         handleLabelCreate={name =>
                           createLabel({
@@ -193,14 +58,14 @@ export default class extends React.Component {
                         selectableLabels={selectableLabels}
                       />
                     )}
-                  </Mutation>
+                  </AddLabelMutation>
                 )}
-              </Mutation>
+              </AddCardMutation>
               <div ref={this.setMenuPortal} />
             </React.Fragment>
           );
         }}
-      </Query>
+      </LabelsQuery>
     );
   }
 }

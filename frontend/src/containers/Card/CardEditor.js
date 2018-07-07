@@ -15,8 +15,8 @@ export default withFormik({
         }))) ||
       []
   }),
-  handleSubmit: (values, { props }) => {
-    props.handleSubmit(values);
+  handleSubmit: (values, {props, resetForm}) => {
+    props.handleSubmit(values, resetForm);
   }
 })(({ values, handleChange, setFieldValue, ...props }) => (
   <form onSubmit={props.handleSubmit} autoComplete={"off"}>
