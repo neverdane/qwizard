@@ -15,15 +15,15 @@ export default () => (
       <AskedQuestionsEvolution />
       <CoveredQuestionsCount />
       <CorrectAnswersCount />
-      <MostUsedLabelsDistribution />
-      <TotalQuestionsCount flex={1} />
+      <MostUsedLabelsDistribution flex={1} />
+      <TotalQuestionsCount style={{ height: "8em" }} />
     </Sidebar>
     <Content>
       <Section>
         <Title>New Question</Title>
         <CardCreator />
       </Section>
-      <Section>
+      <Section flex={1}>
         <Title>Last Questions</Title>
         <LastCardsSummaries />
       </Section>
