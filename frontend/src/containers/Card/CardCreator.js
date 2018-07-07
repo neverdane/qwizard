@@ -15,7 +15,7 @@ const CardWrapper = styled(animated.div)`
 
 const QUERY_CARDS = gql`
   {
-    cards {
+    cards(first: 5, order: { createdAt: "DESC" }) {
       edges {
         node {
           id
@@ -148,17 +148,21 @@ export default class extends React.Component {
                     query: QUERY_CARDS
                   });
 
+                  if (cards.edges.length >= 5) {
+                    cards.edges.splice(-1, 1);
+                  }
+
                   cache.writeQuery({
                     query: QUERY_CARDS,
                     data: {
                       cards: {
                         ...cards,
                         edges: [
-                          ...cards.edges,
                           {
                             node: createCard,
                             __typename: "CardEdge"
-                          }
+                          },
+                          ...cards.edges
                         ]
                       }
                     }

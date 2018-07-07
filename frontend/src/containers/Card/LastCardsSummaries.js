@@ -126,8 +126,7 @@ export default class extends React.Component {
               labels: labels.edges
                 ? labels.edges.map(({ node: label }) => label)
                 : []
-            }))
-            .reverse();
+            }));
 
           return (
             <List>
