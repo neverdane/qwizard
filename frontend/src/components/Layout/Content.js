@@ -10,7 +10,14 @@ const Container = Flex.extend`
 export const Section = Flex.extend`
   flex-direction: column;
   padding: 1em 2em;
-  flex-shrink: 0;
+  background: ${props =>
+    props.backgroundMode === "gradient"
+      ? `linear-gradient(
+          to right, 
+          ${props.theme.colors.primary} 20%, 
+          ${props.theme.colors.secondary}
+        )`
+      : "transparent"};
 `;
 
 export const Title = styled.span`

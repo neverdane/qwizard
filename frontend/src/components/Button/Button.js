@@ -1,28 +1,39 @@
 import React from "react";
 import withStyles from "@material-ui/core/es/styles/withStyles";
-import Button from "@material-ui/core/es/Button/Button";
+import MuiButton from "@material-ui/core/es/Button/Button";
 import theme from "../../theme/index";
 import styled from "styled-components";
 
-export default styled(withStyles({
-  root: {
-    backgroundColor: 'transparent',
-    borderRadius: '0',
-    borderWidth: '0.1em',
-    borderStyle: 'solid',
-    fontFamily: `${theme.text.fonts.secondary}`,
-    fontSize: '1rem',
-    minWidth: 0
-  }
-})(({color, ...otherProps}) => <Button disableFocusRipple={true} {...otherProps} />))`
+const Button = styled(
+  withStyles({
+    root: {
+      backgroundColor: "transparent",
+      borderRadius: "0",
+      borderWidth: "0.1em",
+      borderStyle: "solid",
+      fontFamily: `${theme.text.fonts.secondary}`,
+      fontSize: "1rem",
+      minWidth: 0
+    }
+  })(({ color, invertedColor = theme.colors.white, ...otherProps }) => (
+    <MuiButton disableFocusRipple={true} {...otherProps} />
+  ))
+)`
   && {
     color: ${props => props.color || props.theme.colors.primary};
     font-weight: 400;
 
-    &&:focus, &&:hover {
+    &&:focus,
+    &&:hover {
       background-color: ${props => props.color || props.theme.colors.primary};
-      color: ${props => props.theme.colors.white};
+      color: ${props => props.invertedColor};
       border-color: ${props => props.color || props.theme.colors.primary};
     }
   }
 `;
+
+Button.defaultProps = {
+  invertedColor: theme.colors.white
+};
+
+export default Button;

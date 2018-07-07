@@ -8,6 +8,7 @@ import MostUsedLabelsDistribution from "../Stats/MostUsedLabelsDistribution";
 import TotalQuestionsCount from "../Stats/TotalQuestionsCount";
 import Content, { Section, Title } from "../../components/Layout/Content";
 import LastCardsSummaries from "../Card/LastCardsSummaries";
+import QuizCreator from "../Quiz/QuizCreator";
 
 export default () => (
   <React.Fragment>
@@ -26,6 +27,10 @@ export default () => (
       <Section flex={1}>
         <Title>Last Questions</Title>
         <LastCardsSummaries />
+      </Section>
+      <Section backgroundMode="gradient" style={{ height: "8em" }}>
+        <Title>New Quiz</Title>
+        <QuizCreator />
       </Section>
     </Content>
   </React.Fragment>

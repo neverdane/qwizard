@@ -6,6 +6,7 @@ const theme = {
     white: '#FAFAFA',
     dark: "#333333",
     blue: "#8BC9CF",
+    transparentBlack: "rgba(0, 0, 0, 0.2)",
     transparentDark: "rgba(0, 0, 0, 0.03)",
     transparentWhite: "rgba(255, 255, 255, 0.2)",
     transparentGrey: "#E9E9E9",
@@ -22,6 +23,7 @@ const theme = {
 
 theme.colors.primary = theme.colors.blue;
 theme.colors.darkPrimary = darken(0.25, theme.colors.primary);
+theme.colors.secondary = theme.colors.green;
 theme.text.fonts.primary = theme.text.fonts.sansSerif;
 theme.text.fonts.secondary = theme.text.fonts.sansSerif;
 
