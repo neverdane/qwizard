@@ -9,17 +9,13 @@ const Container = styled.section`
   overflow: hidden;
 `;
 
-const rowStyles = css`
+export const Row = styled(animated.div)`
   display: flex;
   flex-grow: 1;
   align-items: center;
   &:not(:first-of-type) {
     margin-top: 0.8em;
   }
-`;
-
-export const Row = styled(animated.div)`
-  ${rowStyles};
 `;
 
 export default ({ children }) => <Container>{children}</Container>;
