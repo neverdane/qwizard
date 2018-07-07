@@ -2,38 +2,9 @@ import React from "react";
 import CardEditor from "./CardEditor";
 import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
-import styled from "styled-components";
 import uuid from "uuid-v4";
-import { animated, Transition } from "react-spring";
-import CardSummary from "../../components/Card/CardSummary";
-
-const CardWrapper = styled(animated.div)`
-  &:not(:last-of-type) {
-    margin-bottom: 1em;
-  }
-`;
-
-const QUERY_CARDS = gql`
-  {
-    cards(first: 5, order: { createdAt: "DESC" }) {
-      edges {
-        node {
-          id
-          sentence
-          answer
-          labels {
-            edges {
-              node {
-                id
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { Transition } from "react-spring";
+import { QUERY_CARDS } from "./LastCardsSummaries";
 
 const QUERY_LABELS = gql`
   {
