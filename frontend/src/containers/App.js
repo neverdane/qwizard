@@ -1,9 +1,25 @@
 import React from "react";
-import Layout from "../components/Layout/Layout";
-import Admin from "./Admin/Admin";
+import AdminLayout from "../components/Layout/AdminLayout";
+import Dashboard from "./Dashboard/Dashboard";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect
+} from "react-router-dom";
 
 export default () => (
-  <Layout>
-    <Admin />
-  </Layout>
+  <Router>
+    <Switch>
+      <Redirect exact={true} from="/" to={"/admin"} />
+      <Route
+        path="/admin"
+        render={() => (
+          <AdminLayout>
+            <Dashboard />
+          </AdminLayout>
+        )}
+      />
+    </Switch>
+  </Router>
 );
