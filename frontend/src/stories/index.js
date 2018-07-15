@@ -13,42 +13,44 @@ import Card from "../components/Card/Card";
 import CardEditor from "../components/Card/CardEditor";
 import CardSummary from "../components/Card/CardSummary";
 import QuestionsChart from "../components/Chart/QuestionsChart";
+import Stream from "../components/Stream";
 import { DateTime } from "luxon";
 import Tag from "../components/Card/Tag";
+import StreamLoader from "../components/StreamLoader";
 
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
   .add("creation", () => (
-      <CardEditor
-        mode="creation"
-        selectableLabelsOptions={[
-          { label: "histoire", value: "histoire" },
-          { label: "géographie", value: "géographie" },
-          { label: "musique", value: "musique" },
-          { label: "cinéma", value: "cinéma" }
-        ]}
-      />
+    <CardEditor
+      mode="creation"
+      selectableLabelsOptions={[
+        { label: "histoire", value: "histoire" },
+        { label: "géographie", value: "géographie" },
+        { label: "musique", value: "musique" },
+        { label: "cinéma", value: "cinéma" }
+      ]}
+    />
   ))
   .add("edition", () => (
-      <CardEditor
-        mode="edition"
-        question="En quelle année a eu lieu la bataille de Marignan ?"
-        response="1515"
-        labels={[{ label: "histoire", value: "histoire" }]}
-        selectableLabelsOptions={[
-          { label: "histoire", value: "histoire" },
-          { label: "géographie", value: "géographie" },
-          { label: "musique", value: "musique" },
-          { label: "cinéma", value: "cinéma" }
-        ]}
-      />
+    <CardEditor
+      mode="edition"
+      question="En quelle année a eu lieu la bataille de Marignan ?"
+      response="1515"
+      labels={[{ label: "histoire", value: "histoire" }]}
+      selectableLabelsOptions={[
+        { label: "histoire", value: "histoire" },
+        { label: "géographie", value: "géographie" },
+        { label: "musique", value: "musique" },
+        { label: "cinéma", value: "cinéma" }
+      ]}
+    />
   ))
   .add("summary", () => (
-      <CardSummary
-        question="En quelle année a eu lieu la bataille de Marignan ?"
-        response="1515"
-        labels={[{ name: "histoire" }]}
-      />
+    <CardSummary
+      question="En quelle année a eu lieu la bataille de Marignan ?"
+      response="1515"
+      labels={[{ name: "histoire" }]}
+    />
   ));
 
 storiesOf("Input", module)
@@ -141,3 +143,11 @@ storiesOf("Chart", module)
       </div>
     );
   });
+
+storiesOf("Stream", module)
+  .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
+  .add("default", () => (
+    <React.Fragment>
+      <StreamLoader />
+    </React.Fragment>
+  ));
