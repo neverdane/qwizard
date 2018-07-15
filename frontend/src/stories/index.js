@@ -13,10 +13,10 @@ import Card from "../components/Card/Card";
 import CardEditor from "../components/Card/CardEditor";
 import CardSummary from "../components/Card/CardSummary";
 import QuestionsChart from "../components/Chart/QuestionsChart";
-import Stream from "../components/Stream";
+import Stream from "../components/Stream/Stream";
 import { DateTime } from "luxon";
 import Tag from "../components/Card/Tag";
-import StreamLoader from "../components/StreamLoader";
+import StreamLoader from "../components/Stream/StreamLoader";
 
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)

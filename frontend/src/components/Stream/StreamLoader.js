@@ -2,7 +2,7 @@ import React from "react";
 import StreamSvg from "./Stream";
 import styled from "styled-components";
 import { Flex } from "grid-styled";
-import LogoIcon from "./Layout/LogoIcon";
+import LogoIcon from "../Layout/LogoIcon";
 
 const Wrapper = Flex.extend`
   position: absolute;

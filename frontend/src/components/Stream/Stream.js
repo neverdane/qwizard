@@ -1,5 +1,5 @@
 import React from "react";
-import theme from "../theme";
+import theme from "../../theme/index";
 import uuid from "uuid-v4";
 
 const radius = 20;
