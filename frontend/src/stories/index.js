@@ -17,6 +17,7 @@ import Stream from "../components/Stream/Stream";
 import { DateTime } from "luxon";
 import Tag from "../components/Card/Tag";
 import StreamLoader from "../components/Stream/StreamLoader";
+import Question from "../components/Question/Question";
 
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
@@ -149,5 +150,13 @@ storiesOf("Stream", module)
   .add("default", () => (
     <React.Fragment>
       <StreamLoader />
+    </React.Fragment>
+  ));
+
+storiesOf("Question", module)
+  .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
+  .add("default", () => (
+    <React.Fragment>
+      <Question />
     </React.Fragment>
   ));
