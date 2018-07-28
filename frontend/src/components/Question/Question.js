@@ -63,11 +63,11 @@ const Placeholder = styled(StreamLines)`
   fill: ${props => props.theme.colors.transparentBlack};
 `;
 
-export default props => (
+export default ({ number, question }) => (
   <Container>
     <Header>
-      <Number>01</Number>
-      <Title>Qui a réalisé Batman The Dark Knight ?</Title>
+      <Number>{number.toString().padStart(2, "0")}</Number>
+      <Title>{question}</Title>
     </Header>
     <Body>
       <QuestionRow>

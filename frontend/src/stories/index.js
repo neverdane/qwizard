@@ -157,6 +157,9 @@ storiesOf("Question", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
   .add("default", () => (
     <React.Fragment>
-      <Question />
+      <Question
+        number={1}
+        question="En quelle année a eu lieu la bataille de Marignan ?"
+      />
     </React.Fragment>
   ));
