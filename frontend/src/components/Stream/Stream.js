@@ -1,6 +1,7 @@
 import React from "react";
 import theme from "../../theme/index";
 import uuid from "uuid-v4";
+import StreamLines from "./StreamLines";
 
 const radius = 20;
 const horizontalGap = 20;
@@ -11,8 +12,10 @@ const logoCircleWidth = 240;
 
 const lines = [
   {
-    direction: "right",
-    duration: "5s",
+    animation: {
+      direction: "right",
+      duration: "5s"
+    },
     paths: [
       { width: 100 },
       { width: 200 },
@@ -27,8 +30,10 @@ const lines = [
     ]
   },
   {
-    direction: "left",
-    duration: "6s",
+    animation: {
+      direction: "left",
+      duration: "6s"
+    },
     paths: [
       { width: 100 },
       { width: 200 },
@@ -43,8 +48,10 @@ const lines = [
     ]
   },
   {
-    direction: "right",
-    duration: "8s",
+    animation: {
+      direction: "right",
+      duration: "8s"
+    },
     paths: [
       { width: 100 },
       { width: 200 },
@@ -59,8 +66,10 @@ const lines = [
     ]
   },
   {
-    direction: "left",
-    duration: "8s",
+    animation: {
+      direction: "left",
+      duration: "8s"
+    },
     paths: [
       { width: 100 },
       { width: 200 },
@@ -75,8 +84,10 @@ const lines = [
     ]
   },
   {
-    direction: "right",
-    duration: "7s",
+    animation: {
+      direction: "right",
+      duration: "7s"
+    },
     paths: [
       { width: 100 },
       { width: 200 },
@@ -91,36 +102,6 @@ const lines = [
     ]
   }
 ];
-
-const StreamLine = ({ paths, direction, duration, y }) => {
-  let offset = 0;
-  const linesPaths = [...paths, ...paths];
-  return (
-    <svg y={y}>
-      {linesPaths.map(linePath => {
-        const lineWidth = linePath.width;
-        const totalWidth = lineWidth + 2 * radius;
-        offset += totalWidth + horizontalGap;
-
-        return (
-          <path
-            d={`M${radius +
-              offset -
-              totalWidth},0 h${lineWidth} a${radius},${radius} 0 0 1 ${radius},${radius} a${radius},${radius} 0 0 1 -${radius},${radius} h-${lineWidth} a${radius},${radius} 0 0 1 -${radius},-${radius} a${radius},${radius} 0 0 1 ${radius},-${radius} z`}
-          />
-        );
-      })}
-      <animate
-        attributeName="x"
-        from={direction === "left" ? 0 : -width}
-        to={direction === "left" ? -width : 0}
-        dur={duration}
-        fill="remove"
-        repeatCount="indefinite"
-      />
-    </svg>
-  );
-};
 
 export default props => {
   let yOffset = 0;
@@ -152,18 +133,14 @@ export default props => {
                 <rect x="0" y="0" width={width} height={height} fill="#fff" />
               </mask>
             </defs>
-            <svg mask={`url(#stream-mask-${streamId})`}>
-              {lines.map(line => {
-                yOffset += radius * 2 + verticalGap;
-
-                return (
-                  <StreamLine
-                    {...line}
-                    y={yOffset - (radius * 2 + verticalGap)}
-                  />
-                );
-              })}
-            </svg>
+            <StreamLines
+              mask={`url(#stream-mask-${streamId})`}
+              lines={lines}
+              width={width}
+              horizontalGap={horizontalGap}
+              verticalGap={verticalGap}
+              radius={radius}
+            />
           </svg>
         </mask>
         <linearGradient id={`stream-gradient-${streamId}`}>
