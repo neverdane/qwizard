@@ -5,6 +5,10 @@ import Button from "../Button/Button";
 import StreamLines from "../Stream/StreamLines";
 import theme from "../../theme";
 
+export const STATUS_ANSWERING = "answering";
+export const STATUS_WRONG_ANSWER = "wrong-answer";
+export const STATUS_RIGHT_ANSWER = "right-answer";
+
 const Container = styled.section`
   display: flex;
   flex-direction: column;
@@ -12,9 +16,21 @@ const Container = styled.section`
   position: relative;
 `;
 
+const getColorFromStatus = ({ status, theme }) => {
+  switch (status) {
+    default:
+    case STATUS_ANSWERING:
+      return theme.colors.primary;
+    case STATUS_RIGHT_ANSWER:
+      return theme.colors.green;
+    case STATUS_WRONG_ANSWER:
+      return theme.colors.red;
+  }
+};
+
 const Header = styled.header`
   display: flex;
-  background: ${props => props.theme.colors.primary};
+  background: ${props => getColorFromStatus(props)};
   padding: 0.5em 7em;
   min-height: 7em;
   align-items: flex-end;
@@ -50,11 +66,11 @@ const QuestionRow = styled.div`
   width: 100%;
 `;
 
-const StatusPlaceholder = styled.div`
+const Status = styled.div`
   display: flex;
   flex-grow: 1;
-  flex-direction: column;
   margin-top: 2.5em;
+  min-height: 3em;
 `;
 
 const Placeholder = styled(StreamLines)`
@@ -63,36 +79,73 @@ const Placeholder = styled(StreamLines)`
   fill: ${props => props.theme.colors.transparentBlack};
 `;
 
-export default ({ number, question }) => (
+const RightAnswerStatus = styled.span`
+  color: ${props => props.theme.colors.green};
+  font-size: 1.8em;
+  text-transform: uppercase;
+`;
+
+const WrongAnswerStatus = RightAnswerStatus.extend`
+  color: ${props => props.theme.colors.red};
+  margin-right: 1em;
+`;
+
+const RightAnswer = styled.span`
+  color: ${props => props.theme.colors.white};
+  font-size: 1.3em;
+  position: relative;
+  top: 0.4em;
+`;
+
+export default ({ number, question, status, answer }) => (
   <Container>
-    <Header>
+    <Header status={status}>
       <Number>{number.toString().padStart(2, "0")}</Number>
       <Title>{question}</Title>
     </Header>
     <Body>
       <QuestionRow>
-        <InversedInput style={{ flexGrow: 1, marginRight: "1em" }} />
-        <Button invertedColor={theme.colors.dark}>Answer</Button>
-      </QuestionRow>
-      <StatusPlaceholder>
-        <Placeholder
-          viewBox={`0 0 1920 100`}
-          lines={[
-            {
-              paths: [
-                { width: 500 },
-                { width: 300 },
-                { width: 200 },
-                { width: 400 },
-                { width: 240 }
-              ]
-            },
-            {
-              paths: [{ width: 300 }, { width: 100 }, { width: 200 }]
-            }
-          ]}
+        <InversedInput
+          disabled={[STATUS_WRONG_ANSWER, STATUS_RIGHT_ANSWER].includes(status)}
+          style={{ flexGrow: 1, marginRight: "1em" }}
         />
-      </StatusPlaceholder>
+        <Button
+          invertedColor={theme.colors.dark}
+          disabled={[STATUS_WRONG_ANSWER, STATUS_RIGHT_ANSWER].includes(status)}
+        >
+          Answer
+        </Button>
+      </QuestionRow>
+      <Status>
+        {status === STATUS_RIGHT_ANSWER && (
+          <RightAnswerStatus>Correct !</RightAnswerStatus>
+        )}
+        {status === STATUS_WRONG_ANSWER && (
+          <React.Fragment>
+            <WrongAnswerStatus>Faux...</WrongAnswerStatus>
+            <RightAnswer>La réponse était {answer}.</RightAnswer>
+          </React.Fragment>
+        )}
+        {status === STATUS_ANSWERING && (
+          <Placeholder
+            viewBox={`0 0 1920 100`}
+            lines={[
+              {
+                paths: [
+                  { width: 500 },
+                  { width: 300 },
+                  { width: 200 },
+                  { width: 400 },
+                  { width: 240 }
+                ]
+              },
+              {
+                paths: [{ width: 300 }, { width: 100 }, { width: 200 }]
+              }
+            ]}
+          />
+        )}
+      </Status>
     </Body>
   </Container>
 );

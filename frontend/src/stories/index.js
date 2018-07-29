@@ -17,7 +17,11 @@ import Stream from "../components/Stream/Stream";
 import { DateTime } from "luxon";
 import Tag from "../components/Card/Tag";
 import StreamLoader from "../components/Stream/StreamLoader";
-import Question from "../components/Question/Question";
+import Question, {
+  STATUS_ANSWERING,
+  STATUS_RIGHT_ANSWER,
+  STATUS_WRONG_ANSWER
+} from "../components/Question/Question";
 
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
@@ -155,11 +159,31 @@ storiesOf("Stream", module)
 
 storiesOf("Question", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
-  .add("default", () => (
+  .add("answering", () => (
     <React.Fragment>
       <Question
         number={1}
         question="En quelle année a eu lieu la bataille de Marignan ?"
+        status={STATUS_ANSWERING}
+      />
+    </React.Fragment>
+  ))
+  .add("right answer", () => (
+    <React.Fragment>
+      <Question
+        number={1}
+        question="En quelle année a eu lieu la bataille de Marignan ?"
+        status={STATUS_RIGHT_ANSWER}
+      />
+    </React.Fragment>
+  ))
+  .add("wrong answer", () => (
+    <React.Fragment>
+      <Question
+        number={1}
+        question="En quelle année a eu lieu la bataille de Marignan ?"
+        answer={"1515"}
+        status={STATUS_WRONG_ANSWER}
       />
     </React.Fragment>
   ));
