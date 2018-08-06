@@ -22,6 +22,7 @@ import Question, {
   STATUS_RIGHT_ANSWER,
   STATUS_WRONG_ANSWER
 } from "../components/Question/Question";
+import { withKnobs, boolean } from "@storybook/addon-knobs";
 
 storiesOf("Card", module)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
@@ -158,13 +159,16 @@ storiesOf("Stream", module)
   ));
 
 storiesOf("Question", module)
+  .addDecorator(withKnobs)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
   .add("answering", () => (
     <React.Fragment>
       <Question
         number={1}
         question="En quelle année a eu lieu la bataille de Marignan ?"
-        status={STATUS_ANSWERING}
+        status={
+          boolean("Answering", true) ? STATUS_ANSWERING : STATUS_RIGHT_ANSWER
+        }
       />
     </React.Fragment>
   ))
