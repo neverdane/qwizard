@@ -38,6 +38,7 @@ const Header = styled.header`
   align-items: flex-end;
   position: relative;
   overflow: hidden;
+  transition: background-color 200ms;
 `;
 
 const Body = styled.div`
@@ -76,8 +77,7 @@ const Status = styled.div`
 `;
 
 const Placeholder = styled(StreamLines)`
-  height: 100%;
-  width: 100%;
+  height: 2.7em;
   fill: ${props => props.theme.colors.transparentBlack};
 `;
 
