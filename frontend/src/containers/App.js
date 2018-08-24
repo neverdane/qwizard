@@ -21,7 +21,7 @@ export default () => (
           </AdminLayout>
         )}
       />
-      <Route path="/quiz/:id" exact={true} render={() => <QuizLayout />} />
+      <Route path="/quiz/:id" exact={true} component={QuizLayout} />
     </Switch>
   </Router>
 );
