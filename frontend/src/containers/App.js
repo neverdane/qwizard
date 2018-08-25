@@ -8,6 +8,7 @@ import {
   Redirect
 } from "react-router-dom";
 import QuizLayout from "../components/Layout/QuizLayout";
+import Quiz from "./Quiz/Quiz";
 
 export default () => (
   <Router>
@@ -21,7 +22,9 @@ export default () => (
           </AdminLayout>
         )}
       />
-      <Route path="/quiz/:id" exact={true} component={QuizLayout} />
+      <Route path="/quiz/:quizId" exact={true} render={() => <QuizLayout>
+        <Quiz/>
+      </QuizLayout>} />
     </Switch>
   </Router>
 );

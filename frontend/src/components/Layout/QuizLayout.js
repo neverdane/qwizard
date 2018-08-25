@@ -5,6 +5,8 @@ import StreamLoader from "../Stream/StreamLoader";
 
 const Layout = Flex.extend`
   height: 100%;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Header = Flex.extend`
@@ -14,6 +16,7 @@ const Header = Flex.extend`
   justify-content: center;
   padding-top: 2em;
   position: absolute;
+  align-self: flex-start;
 `;
 
 const Logo = SvgLogo.extend`

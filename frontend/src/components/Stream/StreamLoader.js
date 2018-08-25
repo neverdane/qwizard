@@ -23,7 +23,7 @@ const RightStream = Stream.extend`
 const Logo = styled(LogoIcon)`
   height: 12em;
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   fill: ${props => props.theme.colors.primary};
 `;
 
