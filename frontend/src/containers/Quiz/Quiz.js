@@ -20,18 +20,31 @@ export default withRouter(
 
         return (
           <QuestionsWaitingLine>
-            {questions.edges.map(({ node: { card: { sentence } } }, index) => {
-              if (index < WAITING_LINE_LENGTH) {
-                return (
-                  <Question
-                    key={index}
-                    number={index + 1}
-                    question={sentence}
-                    condition={index === 0 ? CONDITION_STAGE : CONDITION_BEHIND}
-                  />
-                );
+            {questions.edges.map(
+              (
+                {
+                  node: {
+                    id,
+                    card: { sentence }
+                  }
+                },
+                index
+              ) => {
+                if (index < WAITING_LINE_LENGTH) {
+                  return (
+                    <Question
+                      key={id}
+                      iri={id}
+                      number={index + 1}
+                      question={sentence}
+                      condition={
+                        index === 0 ? CONDITION_STAGE : CONDITION_BEHIND
+                      }
+                    />
+                  );
+                }
               }
-            })}
+            )}
           </QuestionsWaitingLine>
         );
       }}

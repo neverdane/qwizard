@@ -20,3 +20,15 @@ export const generateQuiz = ({
     return quizId;
   });
 };
+
+export const submitQuestionResponse = (questionId, response) => dispatch => {
+  dispatch({
+    type: "ANSWER_QUESTION_REQUEST"
+  });
+
+  return api.submitQuestionResponse(questionId, response).then(result => {
+    dispatch({
+      type: "ANSWER_QUESTION_SUCCESS"
+    });
+  });
+};

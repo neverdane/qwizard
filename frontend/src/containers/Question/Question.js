@@ -1,17 +1,20 @@
 import React from "react";
 import { withFormik } from "formik";
-import { generateQuiz } from "../../actions";
+import { generateQuiz, submitQuestionResponse } from "../../actions";
 import { connect } from "react-redux";
 import Question from "../../components/Question/Question";
 
 export default connect(null, {
-  generateQuiz
+  generateQuiz,
+  submitQuestionResponse
 })(
   withFormik({
     mapPropsToValues: () => ({
       response: ""
     }),
-    handleSubmit: (values, { props }) => {}
+    handleSubmit: (values, { props }) => {
+      props.submitQuestionResponse(props.iri, values.response);
+    }
   })(({ handleSubmit, handleChange, values, ...props }) => {
     return (
       <Question
