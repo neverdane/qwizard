@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { getCurrentQuizIri } from "../../reducers";
 import { withRouter } from "react-router-dom";
 import QuizQuestionsQuery from "../Apollo/QuizQuestionsQuery";
-import Question, {
+import Question from "../../containers/Question/Question";
+import {
   CONDITION_BEHIND,
   CONDITION_STAGE
 } from "../../components/Question/Question";

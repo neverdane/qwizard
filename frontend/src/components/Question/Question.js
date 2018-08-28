@@ -118,12 +118,20 @@ const PlaceholderContainer = styled(ApparitionDiv)`
   width: 100%;
 `;
 
+const Form = styled.form`
+  display: flex;
+  width: 100%;
+`;
+
 export default ({
   number,
   question,
   status,
   answer,
   condition = CONDITION_STAGE,
+  response = "",
+  handleResponseSubmission = () => {},
+  handleResponseChange = () => {},
   ...props
 }) => {
   return (
@@ -150,22 +158,28 @@ export default ({
             <Apparition from={{ opacity: 0, x: 5 }} delay={200}>
               {style => (
                 <QuestionRow style={style}>
-                  <InversedInput
-                    disabled={[
-                      STATUS_WRONG_ANSWER,
-                      STATUS_RIGHT_ANSWER
-                    ].includes(status)}
-                    style={{ flexGrow: 1, marginRight: "1em" }}
-                  />
-                  <Button
-                    invertedColor={theme.colors.dark}
-                    disabled={[
-                      STATUS_WRONG_ANSWER,
-                      STATUS_RIGHT_ANSWER
-                    ].includes(status)}
-                  >
-                    Answer
-                  </Button>
+                  <Form onSubmit={handleResponseSubmission}>
+                    <InversedInput
+                      name="response"
+                      value={response}
+                      disabled={[
+                        STATUS_WRONG_ANSWER,
+                        STATUS_RIGHT_ANSWER
+                      ].includes(status)}
+                      style={{ flexGrow: 1, marginRight: "1em" }}
+                      onChange={handleResponseChange}
+                    />
+                    <Button
+                      type="submit"
+                      invertedColor={theme.colors.dark}
+                      disabled={[
+                        STATUS_WRONG_ANSWER,
+                        STATUS_RIGHT_ANSWER
+                      ].includes(status)}
+                    >
+                      Answer
+                    </Button>
+                  </Form>
                 </QuestionRow>
               )}
             </Apparition>
