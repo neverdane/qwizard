@@ -18,6 +18,8 @@ import { DateTime } from "luxon";
 import Tag from "../components/Card/Tag";
 import StreamLoader from "../components/Stream/StreamLoader";
 import Question, {
+  CONDITION_BEHIND,
+  CONDITION_STAGE,
   STATUS_ANSWERING,
   STATUS_RIGHT_ANSWER,
   STATUS_WRONG_ANSWER
@@ -168,6 +170,9 @@ storiesOf("Question", module)
         question="En quelle année a eu lieu la bataille de Marignan ?"
         status={
           boolean("Answering", true) ? STATUS_ANSWERING : STATUS_RIGHT_ANSWER
+        }
+        condition={
+          boolean("Staging", true) ? CONDITION_STAGE : CONDITION_BEHIND
         }
       />
     </React.Fragment>

@@ -3,7 +3,13 @@ import { connect } from "react-redux";
 import { getCurrentQuizIri } from "../../reducers";
 import { withRouter } from "react-router-dom";
 import QuizQuestionsQuery from "../Apollo/QuizQuestionsQuery";
-import Question from "../../components/Question/Question";
+import Question, {
+  CONDITION_BEHIND,
+  CONDITION_STAGE
+} from "../../components/Question/Question";
+import QuestionsWaitingLine, {
+  WAITING_LINE_LENGTH
+} from "../../components/Question/WaitingLine";
 
 export default withRouter(
   connect((state, props) => ({ quizIri: getCurrentQuizIri(props) }))(props => (
@@ -11,17 +17,21 @@ export default withRouter(
       {({ data: { questions }, loadingQuestions }) => {
         if (loadingQuestions || !questions) return "loading";
 
-        return questions.edges.map(
-          (
-            {
-              node: {
-                card: { sentence }
+        return (
+          <QuestionsWaitingLine>
+            {questions.edges.map(({ node: { card: { sentence } } }, index) => {
+              if (index < WAITING_LINE_LENGTH) {
+                return (
+                  <Question
+                    key={index}
+                    number={index + 1}
+                    question={sentence}
+                    condition={index === 0 ? CONDITION_STAGE : CONDITION_BEHIND}
+                  />
+                );
               }
-            },
-            index
-          ) => {
-            return <Question number={index + 1} question={sentence} />;
-          }
+            })}
+          </QuestionsWaitingLine>
         );
       }}
     </QuizQuestionsQuery>
