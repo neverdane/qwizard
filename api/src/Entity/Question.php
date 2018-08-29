@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Table(
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\QuestionsRepository")
  * @ORM\HasLifecycleCallbacks
  *
- * @ApiResource
+ * @ApiResource(normalizationContext={"groups"={"question"}})
  * @ApiFilter(SearchFilter::class, properties={"quiz"})
  */
 class Question
@@ -33,6 +34,8 @@ class Question
     /**
      * @var Quiz
      *
+     * @Groups("question")
+     *
      * @ORM\ManyToOne(targetEntity="Quiz", inversedBy="questions")
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
@@ -40,6 +43,8 @@ class Question
 
     /**
      * @var Card
+     *
+     * @Groups("question")
      *
      * @ORM\ManyToOne(targetEntity="Card", inversedBy="questions")
      * @ORM\JoinColumn(name="card_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
@@ -49,6 +54,8 @@ class Question
     /**
      * @var string
      *
+     * @Groups("question")
+     *
      * @ORM\Column(name="response", type="string", length=255, nullable=true)
      */
     private $response;
@@ -56,9 +63,11 @@ class Question
     /**
      * @var bool
      *
+     * @Groups("question")
+     *
      * @ORM\Column(name="is_answer_right", type="boolean", options={"default":false}, nullable=true)
      */
-    private $isAnswerRight;
+    private $answerRight;
 
     public function getId(): int
     {
@@ -103,12 +112,12 @@ class Question
 
     public function isAnswerRight(): ?bool
     {
-        return $this->isAnswerRight;
+        return $this->answerRight;
     }
 
     public function setAnswerAsRight(bool $isAnswerRight = false): Question
     {
-        $this->isAnswerRight = $isAnswerRight;
+        $this->answerRight = $isAnswerRight;
 
         return $this;
     }

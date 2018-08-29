@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Controller\QuestionResponse;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -53,6 +54,8 @@ class Card
 
     /**
      * @var string
+     *
+     * @Groups("question")
      *
      * @ORM\Column(name="answer", type="string", length=255, nullable=false)
      */
