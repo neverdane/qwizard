@@ -48,6 +48,8 @@ class Card
     /**
      * @var string
      *
+     * @Groups("question")
+     *
      * @ORM\Column(name="sentence", type="string", length=255, nullable=false)
      */
     private $sentence;
@@ -97,7 +99,7 @@ class Card
         return $this->id;
     }
 
-    public function getSentence(): string
+    public function getSentence(): ?string
     {
         return $this->sentence;
     }

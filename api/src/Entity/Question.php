@@ -98,12 +98,12 @@ class Question
         return $this;
     }
 
-    public function getResponse(): string
+    public function getResponse(): ?string
     {
         return $this->response;
     }
 
-    public function setResponse(string $response): Question
+    public function setResponse(?string $response): Question
     {
         $this->response = $response;
 
