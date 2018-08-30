@@ -1,22 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getCurrentQuizIri } from "../../reducers";
+import { getCurrentQuizIri, getCurrentQuizQuestions } from "../../reducers";
 import { withRouter } from "react-router-dom";
 import QuizQuestionsQuery from "../Apollo/QuizQuestionsQuery";
 import Question from "../../containers/Question/Question";
 import {
   CONDITION_BEHIND,
-  CONDITION_STAGE
+  CONDITION_STAGE,
+  STATUS_ANSWERING,
+  STATUS_RIGHT_ANSWER,
+  STATUS_WRONG_ANSWER
 } from "../../components/Question/Question";
 import QuestionsWaitingLine, {
   WAITING_LINE_LENGTH
 } from "../../components/Question/WaitingLine";
 
 export default withRouter(
-  connect((state, props) => ({ quizIri: getCurrentQuizIri(props) }))(props => (
+  connect((state, props) => ({
+    quizIri: getCurrentQuizIri(props),
+    questionsStatuses: getCurrentQuizQuestions(state)
+  }))(props => (
     <QuizQuestionsQuery {...props} quiz={props.quizIri}>
       {({ data: { questions }, loadingQuestions }) => {
         if (loadingQuestions || !questions) return "loading";
+
+        const { questionsStatuses } = props;
 
         return (
           <QuestionsWaitingLine>
@@ -31,6 +39,15 @@ export default withRouter(
                 index
               ) => {
                 if (index < WAITING_LINE_LENGTH) {
+                  let status = STATUS_ANSWERING;
+                  let answer = null;
+                  if (questionsStatuses[index]) {
+                    status = questionsStatuses[index].isAnswerRight
+                      ? STATUS_RIGHT_ANSWER
+                      : STATUS_WRONG_ANSWER;
+                    answer = questionsStatuses[index].answer;
+                  }
+
                   return (
                     <Question
                       key={id}
@@ -40,6 +57,8 @@ export default withRouter(
                       condition={
                         index === 0 ? CONDITION_STAGE : CONDITION_BEHIND
                       }
+                      status={status}
+                      answer={answer}
                     />
                   );
                 }

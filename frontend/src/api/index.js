@@ -12,10 +12,8 @@ export const generateQuiz = ({
   });
 
 export const submitQuestionResponse = (iri, response) => {
-  return client
-    .put(`http://localhost:8080${iri}`, { response })
-    .then(data => ({
-      isAnswerRight: data.answerRight,
-      answer: null
-    }));
+  return client.put(`http://localhost:8080${iri}`, { response }).then(data => ({
+    isAnswerRight: data.answerRight,
+    answer: data.card.answer
+  }));
 };

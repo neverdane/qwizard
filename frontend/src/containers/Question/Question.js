@@ -13,7 +13,11 @@ export default connect(null, {
       response: ""
     }),
     handleSubmit: (values, { props }) => {
-      props.submitQuestionResponse(props.iri, values.response);
+      props.submitQuestionResponse(
+        props.iri,
+        values.response,
+        props.number - 1
+      );
     }
   })(({ handleSubmit, handleChange, values, ...props }) => {
     return (

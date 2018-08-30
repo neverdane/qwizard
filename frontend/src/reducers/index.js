@@ -1,5 +1,30 @@
 import { combineReducers } from "redux";
 
+const currentQuizQuestions = (state = [], action) => {
+  switch (action.type) {
+    case "ANSWER_QUESTION_SUCCESS":
+      return [
+        ...state.slice(0, action.questionIndex),
+        { isAnswerRight: action.isAnswerRight, answer: action.answer },
+        ...state.slice(action.questionIndex + 1)
+      ];
+    default:
+      return state;
+  }
+};
+
+const currentQuestionIndex = (state = 0, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+const currentQuiz = combineReducers({
+  currentQuestionIndex,
+  questions: currentQuizQuestions
+});
+
 const lastQuizId = (state = null, action) => {
   switch (action.type) {
     case "GENERATE_QUIZ_SUCCESS":
@@ -10,7 +35,8 @@ const lastQuizId = (state = null, action) => {
 };
 
 export default combineReducers({
-  lastQuizId
+  lastQuizId,
+  currentQuiz
 });
 
 export const getLastQuizId = state => state.lastQuizId;
@@ -20,3 +46,6 @@ export const getCurrentQuizIri = props => {
 
   return quizId ? `/quizzes/${quizId}` : null;
 };
+
+export const getCurrentQuiz = state => state.currentQuiz;
+export const getCurrentQuizQuestions = state => getCurrentQuiz(state).questions;

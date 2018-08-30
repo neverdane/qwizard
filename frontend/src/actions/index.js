@@ -21,14 +21,25 @@ export const generateQuiz = ({
   });
 };
 
-export const submitQuestionResponse = (questionId, response) => dispatch => {
-  dispatch({
-    type: "ANSWER_QUESTION_REQUEST"
-  });
-
-  return api.submitQuestionResponse(questionId, response).then(result => {
+export const submitQuestionResponse = (
+  questionId,
+  response,
+  questionIndex
+) => {
+  return dispatch => {
     dispatch({
-      type: "ANSWER_QUESTION_SUCCESS"
+      type: "ANSWER_QUESTION_REQUEST"
     });
-  });
+
+    return api
+      .submitQuestionResponse(questionId, response)
+      .then(({isAnswerRight, answer}) => {
+        dispatch({
+          type: "ANSWER_QUESTION_SUCCESS",
+          questionIndex,
+          isAnswerRight,
+          answer
+        });
+      });
+  };
 };
