@@ -15,6 +15,8 @@ const currentQuizQuestions = (state = [], action) => {
 
 const currentQuestionIndex = (state = 0, action) => {
   switch (action.type) {
+    case "GO_TO_NEXT_QUESTION":
+      return action.questionIndex + 1;
     default:
       return state;
   }
@@ -49,3 +51,5 @@ export const getCurrentQuizIri = props => {
 
 export const getCurrentQuiz = state => state.currentQuiz;
 export const getCurrentQuizQuestions = state => getCurrentQuiz(state).questions;
+export const getCurrentQuizQuestionIndex = state =>
+  getCurrentQuiz(state).currentQuestionIndex;

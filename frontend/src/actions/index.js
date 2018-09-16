@@ -21,11 +21,7 @@ export const generateQuiz = ({
   });
 };
 
-export const submitQuestionResponse = (
-  questionId,
-  response,
-  questionIndex
-) => {
+export const submitQuestionResponse = (questionId, response, questionIndex) => {
   return dispatch => {
     dispatch({
       type: "ANSWER_QUESTION_REQUEST"
@@ -33,13 +29,20 @@ export const submitQuestionResponse = (
 
     return api
       .submitQuestionResponse(questionId, response)
-      .then(({isAnswerRight, answer}) => {
+      .then(({ isAnswerRight, answer }) => {
         dispatch({
           type: "ANSWER_QUESTION_SUCCESS",
           questionIndex,
           isAnswerRight,
           answer
         });
+
+        setTimeout(() => {
+          dispatch({
+            type: "GO_TO_NEXT_QUESTION",
+            questionIndex
+          });
+        }, 2000);
       });
   };
 };
