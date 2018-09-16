@@ -6,6 +6,7 @@ use App\Entity\Question;
 use App\Entity\Quiz;
 use App\Repository\CardsRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class QuizGeneration
 {
@@ -25,11 +26,13 @@ class QuizGeneration
         $this->cardsRepository = $cardsRepository;
     }
 
-    public function __invoke($data = null)
+    public function __invoke(Request $request)
     {
+        $data = json_decode($request->getContent());
+
         $quiz = new Quiz();
 
-        $electedCards = $this->cardsRepository->findRandomCards(3);
+        $electedCards = $this->cardsRepository->findRandomCards($data->questionsCount);
 
         foreach ($electedCards as $card) {
             $quiz->addQuestion((new Question())->setCard($card)->setQuiz($quiz));
