@@ -1,18 +1,15 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import { InversedInput } from "../Form/Input";
+import styled, {css} from "styled-components";
+import {InversedInput} from "../Form/Input";
 import Button from "../Button/Button";
 import StreamLines from "../Stream/StreamLines";
 import theme from "../../theme";
-import { Transition, animated } from "react-spring";
-import Apparition, { ApparitionDiv } from "../utils/Apparition";
+import {Transition, animated} from "react-spring";
+import Apparition, {ApparitionDiv} from "../utils/Apparition";
 
 export const STATUS_ANSWERING = "answering";
 export const STATUS_WRONG_ANSWER = "wrong-answer";
 export const STATUS_RIGHT_ANSWER = "right-answer";
-
-export const CONDITION_STAGE = "stage";
-export const CONDITION_BEHIND = "behind";
 
 const containerStyleWhenBehind = props => {
   return css`
@@ -21,19 +18,19 @@ const containerStyleWhenBehind = props => {
   `;
 };
 
-export const Container = styled.section`
-  transition: all 400ms;
+export const Container = styled(animated.section)`
+  transition: width 400ms, margin-top 400ms, background 400ms;
   display: flex;
   flex-direction: column;
   width: 70%;
-  position: relative;
+  position: absolute;
   background: ${props => props.theme.colors.dark};
 
   ${props =>
-    props.condition === CONDITION_BEHIND && containerStyleWhenBehind(props)};
+  props['data-stage-position'] > 0 && containerStyleWhenBehind(props)};
 `;
 
-const getColorFromStatus = ({ status, theme }) => {
+const getColorFromStatus = ({status, theme}) => {
   switch (status) {
     default:
     case STATUS_ANSWERING:
@@ -124,20 +121,22 @@ const Form = styled.form`
 `;
 
 export default ({
-  number,
-  question,
-  status,
-  answer,
-  condition = CONDITION_STAGE,
-  response = "",
-  handleResponseSubmission = () => {},
-  handleResponseChange = () => {},
-  ...props
-}) => {
+                  number,
+                  question,
+                  status,
+                  answer,
+                  stagePosition,
+                  response = "",
+                  handleResponseSubmission = () => {
+                  },
+                  handleResponseChange = () => {
+                  },
+                  ...props
+                }) => {
   return (
-    <Container {...props} condition={condition}>
+    <Container {...props} data-stage-position={stagePosition}>
       <Header status={status}>
-        {condition === CONDITION_STAGE && (
+        {stagePosition === 0 && (
           <React.Fragment>
             <Apparition>
               {style => (
@@ -146,83 +145,83 @@ export default ({
                 </Number>
               )}
             </Apparition>
-            <Apparition from={{ opacity: 0, x: -10 }} delay={200}>
+            <Apparition from={{opacity: 0, x: -10}} delay={200}>
               {style => <Title style={style}>{question}</Title>}
             </Apparition>
           </React.Fragment>
         )}
       </Header>
       <Body>
-        {condition === CONDITION_STAGE && (
-          <React.Fragment>
-            <Apparition from={{ opacity: 0, x: 5 }} delay={200}>
-              {style => (
-                <QuestionRow style={style}>
-                  <Form onSubmit={handleResponseSubmission}>
-                    <InversedInput
-                      name="response"
-                      value={response}
-                      disabled={[
-                        STATUS_WRONG_ANSWER,
-                        STATUS_RIGHT_ANSWER
-                      ].includes(status)}
-                      style={{ flexGrow: 1, marginRight: "1em" }}
-                      onChange={handleResponseChange}
-                    />
-                    <Button
-                      type="submit"
-                      invertedColor={theme.colors.dark}
-                      disabled={[
-                        STATUS_WRONG_ANSWER,
-                        STATUS_RIGHT_ANSWER
-                      ].includes(status)}
-                    >
-                      Answer
-                    </Button>
-                  </Form>
-                </QuestionRow>
-              )}
-            </Apparition>
-            <Status>
-              {status === STATUS_RIGHT_ANSWER && (
-                <ApparitionDiv from={{ opacity: 0, x: -30 }}>
-                  <RightAnswerStatus>Correct !</RightAnswerStatus>
-                </ApparitionDiv>
-              )}
-              {status === STATUS_WRONG_ANSWER && (
-                <React.Fragment>
-                  <ApparitionDiv from={{ opacity: 0, x: -30 }}>
-                    <WrongAnswerStatus>Faux...</WrongAnswerStatus>
-                  </ApparitionDiv>
-                  <ApparitionDiv from={{ opacity: 0, x: -10 }} delay={400}>
-                    <RightAnswer>La réponse était {answer}.</RightAnswer>
-                  </ApparitionDiv>
-                </React.Fragment>
-              )}
-              {status === STATUS_ANSWERING && (
-                <PlaceholderContainer from={{ opacity: 0, x: -3 }} delay={400}>
-                  <Placeholder
-                    viewBox={`0 0 1920 100`}
-                    lines={[
-                      {
-                        paths: [
-                          { width: 500 },
-                          { width: 300 },
-                          { width: 200 },
-                          { width: 400 },
-                          { width: 240 }
-                        ]
-                      },
-                      {
-                        paths: [{ width: 300 }, { width: 100 }, { width: 200 }]
-                      }
-                    ]}
+      {stagePosition === 0 && (
+        <React.Fragment>
+          <Apparition from={{opacity: 0, x: 5}} delay={200}>
+            {style => (
+              <QuestionRow style={style}>
+                <Form onSubmit={handleResponseSubmission}>
+                  <InversedInput
+                    name="response"
+                    value={response}
+                    disabled={[
+                      STATUS_WRONG_ANSWER,
+                      STATUS_RIGHT_ANSWER
+                    ].includes(status)}
+                    style={{flexGrow: 1, marginRight: "1em"}}
+                    onChange={handleResponseChange}
                   />
-                </PlaceholderContainer>
-              )}
-            </Status>
-          </React.Fragment>
-        )}
+                  <Button
+                    type="submit"
+                    invertedColor={theme.colors.dark}
+                    disabled={[
+                      STATUS_WRONG_ANSWER,
+                      STATUS_RIGHT_ANSWER
+                    ].includes(status)}
+                  >
+                    Answer
+                  </Button>
+                </Form>
+              </QuestionRow>
+            )}
+          </Apparition>
+          <Status>
+            {status === STATUS_RIGHT_ANSWER && (
+              <ApparitionDiv from={{opacity: 0, x: -30}}>
+                <RightAnswerStatus>Correct !</RightAnswerStatus>
+              </ApparitionDiv>
+            )}
+            {status === STATUS_WRONG_ANSWER && (
+              <React.Fragment>
+                <ApparitionDiv from={{opacity: 0, x: -30}}>
+                  <WrongAnswerStatus>Faux...</WrongAnswerStatus>
+                </ApparitionDiv>
+                <ApparitionDiv from={{opacity: 0, x: -10}} delay={400}>
+                  <RightAnswer>La réponse était {answer}.</RightAnswer>
+                </ApparitionDiv>
+              </React.Fragment>
+            )}
+            {status === STATUS_ANSWERING && (
+              <PlaceholderContainer from={{opacity: 0, x: -3}} delay={400}>
+                <Placeholder
+                  viewBox={`0 0 1920 100`}
+                  lines={[
+                    {
+                      paths: [
+                        {width: 500},
+                        {width: 300},
+                        {width: 200},
+                        {width: 400},
+                        {width: 240}
+                      ]
+                    },
+                    {
+                      paths: [{width: 300}, {width: 100}, {width: 200}]
+                    }
+                  ]}
+                />
+              </PlaceholderContainer>
+            )}
+          </Status>
+        </React.Fragment>
+      )}
       </Body>
     </Container>
   );
