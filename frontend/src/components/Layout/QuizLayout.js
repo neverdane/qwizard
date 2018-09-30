@@ -31,7 +31,6 @@ export default ({ children, ...props }) => {
       <Header>
         <Logo color="white" />
       </Header>
-      <StreamLoader />
       {children}
     </Layout>
   );

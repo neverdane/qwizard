@@ -17,6 +17,7 @@ import QuestionsWaitingLine, {
   WAITING_LINE_LENGTH
 } from "../../components/Question/WaitingLine";
 import QuestionApparition from "../../components/Question/Apparition";
+import StreamLoader from "../../components/Stream/StreamLoader";
 
 export default withRouter(
   connect((state, props) => ({
@@ -26,48 +27,51 @@ export default withRouter(
   }))(props => (
     <QuizQuestionsQuery {...props} quiz={props.quizIri}>
       {({data: {questions}, loadingQuestions}) => {
-        if (loadingQuestions || !questions) return "loading";
-
         const {questionsStatuses, currentQuestionIndex} = props;
+        const isLoading = loadingQuestions || !questions;
 
         return (
-          <QuestionsWaitingLine>
-            {questions.edges
-              .map(({node: {id, card: {sentence}}}, index) => {
+          <React.Fragment>
+            <StreamLoader loading={isLoading} />
+            {!isLoading && <QuestionsWaitingLine>
+              {questions.edges
+                .map(({node: {id, card: {sentence}}}, index) => {
 
-                let status = STATUS_ANSWERING;
-                let answer = null;
-                if (questionsStatuses[index]) {
-                  status = questionsStatuses[index].isAnswerRight
-                    ? STATUS_RIGHT_ANSWER
-                    : STATUS_WRONG_ANSWER;
-                  answer = questionsStatuses[index].answer;
-                }
+                  let status = STATUS_ANSWERING;
+                  let answer = null;
+                  if (questionsStatuses[index]) {
+                    status = questionsStatuses[index].isAnswerRight
+                      ? STATUS_RIGHT_ANSWER
+                      : STATUS_WRONG_ANSWER;
+                    answer = questionsStatuses[index].answer;
+                  }
 
-                const stagePosition = index - currentQuestionIndex;
+                  const stagePosition = index - currentQuestionIndex;
 
-                return (
-                  <QuestionApparition
-                    key={id} keys={(
-                    index >= currentQuestionIndex &&
-                    index < WAITING_LINE_LENGTH + currentQuestionIndex
-                  ) ? ['default'] : []} delay={stagePosition * 200}
-                    stagePosition={stagePosition}>
-                    {style => (
-                      <Question
-                        iri={id}
-                        style={style}
-                        number={index + 1}
-                        question={sentence}
-                        stagePosition={stagePosition}
-                        status={status}
-                        answer={answer}
-                      />
-                    )}
-                  </QuestionApparition>
-                );
-              })}
-          </QuestionsWaitingLine>
+                  return (
+                    <QuestionApparition
+                      key={id} keys={(
+                      index >= currentQuestionIndex &&
+                      index < WAITING_LINE_LENGTH + currentQuestionIndex
+                    ) ? ['default'] : []} delay={stagePosition * 200}
+                      stagePosition={stagePosition}>
+                      {style => (
+                        <Question
+                          iri={id}
+                          style={style}
+                          number={index + 1}
+                          question={sentence}
+                          stagePosition={stagePosition}
+                          status={status}
+                          answer={answer}
+                        />
+                      )}
+                    </QuestionApparition>
+                  );
+                })}
+            </QuestionsWaitingLine>
+            }
+          </React.Fragment>
         );
       }}
     </QuizQuestionsQuery>

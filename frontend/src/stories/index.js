@@ -153,10 +153,11 @@ storiesOf("Chart", module)
   });
 
 storiesOf("Stream", module)
+  .addDecorator(withKnobs)
   .addDecorator(story => <ThemeWrapper>{story()}</ThemeWrapper>)
   .add("default", () => (
     <React.Fragment>
-      <StreamLoader />
+      <StreamLoader loading={boolean("Loading", false)} />
     </React.Fragment>
   ));
 
