@@ -14,7 +14,7 @@ const lines = [
   {
     animation: {
       direction: "right",
-      duration: "5s"
+      duration: "11s"
     },
     paths: [
       { width: 100 },
@@ -32,7 +32,7 @@ const lines = [
   {
     animation: {
       direction: "left",
-      duration: "6s"
+      duration: "12s"
     },
     paths: [
       { width: 100 },
@@ -50,7 +50,7 @@ const lines = [
   {
     animation: {
       direction: "right",
-      duration: "8s"
+      duration: "14s"
     },
     paths: [
       { width: 100 },
@@ -68,7 +68,7 @@ const lines = [
   {
     animation: {
       direction: "left",
-      duration: "8s"
+      duration: "15s"
     },
     paths: [
       { width: 100 },
@@ -86,7 +86,7 @@ const lines = [
   {
     animation: {
       direction: "right",
-      duration: "7s"
+      duration: "13s"
     },
     paths: [
       { width: 100 },
